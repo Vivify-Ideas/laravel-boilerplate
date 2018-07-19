@@ -44,8 +44,6 @@ In order to run script all you have to do is run `./init`
   `docker exec -it laravel php artisan migrate`
   `docker exec -it laravel php artisan passport:install`
 
-- Visit http://my-project.loc/api/documentation and feel free to try API using Swagger UI.
-
 ### Set directory permissions
 
 `sudo chmod -R 777 src/storage src/bootstrap/cache`
@@ -55,6 +53,14 @@ In order to run script all you have to do is run `./init`
 - Edit /etc/hosts add local domain my-project.loc
   `127.0.0.1 my-project.loc`
   > Feel free to replace `my-project.loc` with whatever works for you. In that case you should also change `APP_URL` in .env
+
+# How to verify everything is working ?
+
+- Visit http://localhost/api/documentation and feel free to try API using Swagger UI.
+
+  > In case that you are using custom domain, swap `localhost` with your custom domain.
+
+  > App is available on both `http` and `https` (keep in mind that https is using self-signed certificates)
 
 # PHP formatter for visual studio code
 
