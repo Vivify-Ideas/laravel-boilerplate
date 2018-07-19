@@ -18,12 +18,7 @@ In order to run script all you have to do is run `./init`
 
 ## Option 2: Do initial setup manually
 
-### Local development reference using docker-compose
-
-- Edit /etc/hosts add local domain my-project.loc
-  `127.0.0.1 my-project.loc`
-
-  > Feel free to replace `my-project.loc` with whatever works for you. In that case you should also change `APP_URL` in .env
+### Start docker containers and install dependencies
 
 - Run docker containers in detached mode
   `docker-compose up -d`
@@ -52,6 +47,12 @@ In order to run script all you have to do is run `./init`
 ### Set directory permissions
 
 `sudo chmod -R 777 src/storage src/bootstrap/cache`
+
+# Use custom domain for development
+
+- Edit /etc/hosts add local domain my-project.loc
+  `127.0.0.1 my-project.loc`
+  > Feel free to replace `my-project.loc` with whatever works for you. In that case you should also change `APP_URL` in .env
 
 # PHP formatter for visual studio code
 
