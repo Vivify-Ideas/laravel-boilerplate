@@ -4,7 +4,6 @@ services:
   laravel:
     image: vivifyideas/php-fpm-dev:7.2
     container_name: laravel
-    env_file: './src/.env'
     volumes:
       - ./src:/app
 
