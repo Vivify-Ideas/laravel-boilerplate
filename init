@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# Initialize Laravel project for first usage.
+#
+# This script is following Google Shell Style standard
+# https://google.github.io/styleguide/shell.xml
+
+# STDERR log function
+err() {
+  echo -e "\n[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@\n" >&2
+  exit 1
+}
+
+# STDOUT log function
+log() {
+  echo -e "\n[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@\n"
+}
+
+# Check if Docker is installed
+if ! type "docker" > /dev/null 2>&1; then
+    err "Docker not installed"
+fi
+
+# Check if Docker-compose is installed
+if ! type "docker-compose" > /dev/null 2>&1; then
+    err "Docker-Compose not installed"
+fi
+log "Looks like both docker and docker-compose are installed, everything looks good."
+
+log "Starting docker-compose stack if not already started.."
+docker-compose up -d
+if [ $? -ne 0 ]; then
+    err "Error while starting docker-compose stack."
+fi
+
+log "Installing dependencies"
+docker exec -it laravel composer install
+if [ $? -ne 0 ]; then
+    err "Error while installing dependencies."
+fi
+
+log "Generating app key"
+docker exec -it laravel php artisan key:generate
+if [ $? -ne 0 ]; then
+    err "Error while generating app key."
+fi
+
+log "Copying .env.example -> .env"
+cp src/.env.example src/.env
+if [ $? -ne 0 ]; then
+    err "Error while copying .env"
+fi
+
+log "Running database migrations"
+docker exec -it laravel php artisan migrate
+
+log "Generating OAuth client IDs"
+docker exec -it laravel php artisan passport:install
+if [ $? -ne 0 ]; then
+    err "Error while running database migrations."
+fi
+
+log "Setting permissions for storage and bootstrap cache, this might ask you for your password"
+sudo chmod -R 777 src/storage src/bootstrap/cache
+if [ $? -ne 0 ]; then
+    err "Error while setting permissions."
+fi

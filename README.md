@@ -2,50 +2,57 @@
 
 ## Requirements
 
-* see laravel 5.6 requirements at: https://laravel.com/docs/5.6/installation#server-requirements
-* Docker and DockerCompose (for local development only) (Mac distribution https://download.docker.com/mac/stable/Docker.dmg)
+- see Laravel 5.6 requirements at: https://laravel.com/docs/5.6/installation#server-requirements
+- Docker and docker-compose
+  > Detailed instructions for setup of docker can be found [here](https://www.docker.com/community-edition).
 
-## Local development reference using DockerCompose
+# Initial setup of project
 
-* How can I change name of the **my_project**?
-You should change **my_project** to your project name in docker-compose file and then change in .env DB_NAME to the name of your database container
-You also can change **my-project.loc** in `docker/nginx/site.conf` and then change in .env `APP_URL` to your url
+## Option 1: Use script to do everything for you
 
-* Edit /etc/hosts add local domain my-project.loc  
-`127.0.0.1    my-project.loc`
+We've written bash script that will do all things that you would normally have to do manually.
 
-* Run docker containers in detached mode  
-`docker-compose up -d`
+In order to run script all you have to do is run `./init`
 
-(note. If you wish to turn it off, please execute `docker-compose stop`)
+> Script might ask you for your password at some point.
 
-* Check all service status:  
-`docker-compose ps`
+## Option 2: Do initial setup manually
 
-* Log into PHP service container and complete Laravel installation process  
-`docker exec -it my_project_php7 bash`
+### Local development reference using docker-compose
 
-* Inside PHP container, switch to local user **laravel** and install Composer dependencies  
-`su laravel`  
-`composer install`
+- Edit /etc/hosts add local domain my-project.loc
+  `127.0.0.1 my-project.loc`
 
-## Create local environments
+  > Feel free to replace `my-project.loc` with whatever works for you. In that case you should also change `APP_URL` in .env
 
-* create .env environment file in project root
-* copy content from .env.example in .env
+- Run docker containers in detached mode
+  `docker-compose up -d`
 
-* Install/setup Passport by running (read more on https://laravel.com/docs/5.6/passport#introduction)
-(you should be still in PHP container. If not please login into PHP service container first!)  
-`php artisan migrate`  
-`php artisan passport:install`
+  > Whole stack can be stopped with `docker-compose stop`
 
-* Visit http://my-project.loc/api/documentation and feel free to try API using Swagger UI.
+- Check all service status:
+  `docker-compose ps`
 
-## set directory permissions
+- Install project dependencies with composer in container
+  `docker exec -it laravel composer install`
 
-`run sudo chmod -R 777 storage bootstrap/cache` 
+- Generate application key
+  `docker exec -it laravel php artisan key:generate`
 
-## php formatter for visual studio code
+### Create local environments
+
+- copy content from .env.example in .env (`cp .env.example .env`)
+
+- Install/Setup Passport by running (read more on https://laravel.com/docs/5.6/passport#introduction)
+  `docker exec -it laravel php artisan migrate`
+  `docker exec -it laravel php artisan passport:install`
+
+- Visit http://my-project.loc/api/documentation and feel free to try API using Swagger UI.
+
+### Set directory permissions
+
+`sudo chmod -R 777 src/storage src/bootstrap/cache`
+
+# PHP formatter for visual studio code
 
 install [php formatter](https://marketplace.visualstudio.com/items?itemName=Sophisticode.php-formatter). More [info](https://github.com/Dickurt/vscode-php-formatter/wiki).
-
