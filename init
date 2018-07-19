@@ -27,6 +27,12 @@ if ! type "docker-compose" > /dev/null 2>&1; then
 fi
 log "Looks like both docker and docker-compose are installed, everything looks good."
 
+log "Copying .env.example -> .env"
+cp src/.env.example src/.env
+if [ $? -ne 0 ]; then
+    err "Error while copying .env"
+fi
+
 log "Starting docker-compose stack if not already started.."
 docker-compose up -d
 if [ $? -ne 0 ]; then
@@ -43,12 +49,6 @@ log "Generating app key"
 docker exec -it laravel php artisan key:generate
 if [ $? -ne 0 ]; then
     err "Error while generating app key."
-fi
-
-log "Copying .env.example -> .env"
-cp src/.env.example src/.env
-if [ $? -ne 0 ]; then
-    err "Error while copying .env"
 fi
 
 log "Running database migrations"
