@@ -1,4 +1,4 @@
-# Xtra backend - Laravel 5.6 API
+# Laravel Boilerplate - Laravel 5.6 API
 
 ## Requirements
 
