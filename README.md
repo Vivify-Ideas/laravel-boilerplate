@@ -2,8 +2,7 @@
 
 ## Requirements
 
-- see Laravel 5.6 requirements at: https://laravel.com/docs/5.6/installation#server-requirements
-- Docker and docker-compose
+- docker and docker-compose
   > Detailed instructions for setup of docker can be found [here](https://www.docker.com/community-edition).
 
 # Initial setup of project
