@@ -35,7 +35,7 @@ In order to run script all you have to do is run `./init`
 
 ### Create local environments
 
-- copy content from .env.example in .env (`cp .env.example .env`)
+- Copy content from .env.example in .env (`cp .env.example .env`)
 
 - Install/Setup Passport by running (read more on https://laravel.com/docs/5.6/passport#introduction)
   `docker exec -it laravel php artisan migrate`
@@ -55,4 +55,4 @@ In order to run script all you have to do is run `./init`
 
 # PHP formatter for visual studio code
 
-install [php formatter](https://marketplace.visualstudio.com/items?itemName=Sophisticode.php-formatter). More [info](https://github.com/Dickurt/vscode-php-formatter/wiki).
+Install [php formatter](https://marketplace.visualstudio.com/items?itemName=Sophisticode.php-formatter). More [info](https://github.com/Dickurt/vscode-php-formatter/wiki).
