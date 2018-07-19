@@ -3,7 +3,10 @@
 ## Requirements
 
 - docker and docker-compose
+
   > Detailed instructions for setup of docker can be found [here](https://www.docker.com/community-edition).
+
+- user added to `docker` group
 
 # Initial setup of project
 
