@@ -46,7 +46,8 @@ if [ $? -ne 0 ]; then
 fi
 
 log "Generating app key"
-docker exec -it laravel php artisan key:generate
+docker exec -it laravel php artisan key:generate && \
+docker exec -it laravel php artisan cache:clear
 if [ $? -ne 0 ]; then
     err "Error while generating app key."
 fi
