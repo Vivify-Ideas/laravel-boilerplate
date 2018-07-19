@@ -11,32 +11,6 @@ use App\Http\Controllers\Controller;
 class UsersController extends Controller
 {
     /**
-     * @SWG\POST(
-     *   tags={"Users"},
-     *   path="/check-email",
-     *   summary="Email validation",
-     *   operationId="check-email",
-     *   produces={"application/json"},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error"),
-     *   @SWG\Parameter(
-     *     name="email",
-     *     in="formData",
-     *     description="ex. user@test.com",
-     *     required=true,
-     *     type="string"
-     *   ),
-     * )
-     * @param UserCheckEmailRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    function checkEmail(UserCheckEmailRequest $request)
-    {
-        return $request->only('email');
-    }
-
-    /**
      * @SWG\Post(
      *   tags={"Users"},
      *   path="/users/create",

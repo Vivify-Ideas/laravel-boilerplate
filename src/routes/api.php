@@ -12,10 +12,15 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('oauthClient')->post('/auth/login', 'Api\Auth\OauthController@login');
-Route::middleware('oauthClient')->post('/auth/refresh-token', 'Api\Auth\OauthController@refresh');
 
-Route::middleware('auth:api')->get('/users/show', 'Api\User\UsersController@show');
-Route::post('/check-email', 'Api\User\UsersController@checkEmail');
-Route::middleware('oauthClient')->post('/users/create', 'Api\User\UsersController@create');
-
+Route::group([ 'namespace' => 'Api' ], function() {
+  Route::group([ 'middleware' => [ 'oauthClient']], function() {
+    Route::post('/auth/login', 'Auth\OauthController@login');
+    Route::post('/auth/refresh-token', 'Auth\OauthController@refresh');
+    Route::post('/users/create', 'User\UsersController@create');
+  });
+  
+  Route::group([ 'middleware' => [ 'auth:api' ]], function() {
+    Route::get('/users/show', 'User\UsersController@show');
+  });
+});
