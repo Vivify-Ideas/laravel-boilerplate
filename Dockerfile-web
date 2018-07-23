@@ -1,0 +1,15 @@
+FROM nginx:1.10.2
+
+# Copy built static assets to laravel container
+COPY ./src/public /app/public
+
+# Copy vhost
+COPY ./configs/vhost.template /etc/nginx/conf.d/vhost.template
+
+# Copy selfsigned certs
+COPY ./certs/self-signed/certificate.pem /certs/certificate.pem
+COPY ./certs/self-signed/privatekey.pem /certs/privatekey.pem
+COPY ./certs/self-signed/dh.pem /certs/dh.pem
+
+# Set www-data ownerships
+RUN chown -R www-data:www-data /app/public/uploads

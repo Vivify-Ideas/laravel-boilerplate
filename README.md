@@ -65,3 +65,19 @@ In order to run script all you have to do is run `chmod +x init && ./init`
 # PHP formatter for visual studio code
 
 Install [php formatter](https://marketplace.visualstudio.com/items?itemName=Sophisticode.php-formatter). More [info](https://github.com/Dickurt/vscode-php-formatter/wiki).
+
+# Notes for Production/Staging environment
+
+There is separate docker-compose file (`docker-compose.dist.yml`) for production/staging environments.
+
+Biggest differences between dev and staging/production environments are that we are bundling all source files into images, instead of binding local source files to container.
+
+In staging/production environment we included Portainer for easier container/swarm management with Web GUI.
+
+We suggest using our docker registry (`registry.vivifyideas.com`) for those environments, instead of building from Dockerfile
+
+### Exposed services in Production/Staging environment
+
+- Nginx at ports 80/443
+- MariaDB at port 3306
+- Portainer at port 9000
