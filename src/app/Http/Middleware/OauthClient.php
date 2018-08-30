@@ -7,7 +7,7 @@ use Closure;
 
 class OauthClient
 {
-    public $oauthSecurityService;
+    private $oauthSecurityService;
 
     /**
      * LoginController constructor.
