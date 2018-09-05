@@ -39,6 +39,13 @@ services:
     container_name: beanstalk
     image: "jonbaldie/beanstalkd"
 
+  # queue:
+  #   image: vivifyideas/php-fpm-dev:7.2
+  #   container_name: queue
+  #   command: php artisan queue:listen
+  #   volumes:
+  #     - ./src:/app
+
   # es:
   #   image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
   #   environment:
