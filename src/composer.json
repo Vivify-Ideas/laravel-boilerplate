@@ -8,11 +8,14 @@
         "php": "^7.2.7",
         "barryvdh/laravel-cors": "^0.11.0",
         "darkaonline/l5-swagger": "5.7.*",
-        "zircote/swagger-php": "2.0.*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "pda/pheanstalk": "^3.2",
+        "pragmarx/health": "^0.9.15",
+        "predis/predis": "^1.1",
+        "zircote/swagger-php": "2.0.*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

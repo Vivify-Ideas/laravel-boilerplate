@@ -150,6 +150,7 @@ return [
         /*
          * Package Service Providers...
          */
+        PragmaRX\Health\ServiceProvider::class,
 
         /*
          * Application Service Providers...

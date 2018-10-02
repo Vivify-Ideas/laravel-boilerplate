@@ -1,0 +1,16 @@
+name: Latency
+abbreviation: latency
+checker: PragmaRX\Health\Checkers\Ping
+notify: true
+binary: "{{ config('health.services.ping.bin') }}"
+error_message: 'The host "%s" exceeded the maximum accepted latency on ping: last ping was %s, accepted is %s'
+column_size: 3
+targets:
+  - server:
+      name: 1.1.1.1 Ping Check
+      hostname: 1.1.1.1
+      accepted_latency: 25
+  - server:
+      name: 8.8.8.8 Ping Check
+      hostname: 8.8.8.8
+      accepted_latency: 25

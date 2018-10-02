@@ -10,6 +10,17 @@ class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;
 
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForSlack()
+    {
+        return config('services.slack.webhook_url');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
