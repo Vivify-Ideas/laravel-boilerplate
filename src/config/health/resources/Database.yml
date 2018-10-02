@@ -1,0 +1,16 @@
+name: Database
+abbreviation: db
+checker: PragmaRX\Health\Checkers\Database
+notify: true
+column_size: 3
+targets:
+  - users:
+      type: 'find_first_model'
+      models:
+        - "{{ config('auth.providers.users.model') }}"
+  - 'query speed':
+      type: 'raw_query'
+      connection: 'default'
+      query: 'select id from users u order by u.created_at desc'
+      maximum_time: 0.08
+      error_message: 'Query took %sms when it should have last at most %sms'

@@ -62,6 +62,16 @@ In order to run script all you have to do is run `chmod +x init && ./init`
 
   > App is available on both `http` and `https` (keep in mind that https is using self-signed certificates)
 
+# Health panel details
+
+We are using [Health Panel](https://github.com/antonioribeiro/health) to monitor key aspects of application and services.
+
+- Web access for Health panel is available at `http://localhost/health/panel`
+- Health Panel can also return JSON status of each service at route `/health/check`
+- Heatlh panel can also be accessed with artisan commands `health:panel` and `health:check`
+- To enable Slack notifications change `webhook_url` in `services` config
+- For more details about Health Panel go to their [readme](https://github.com/antonioribeiro/health/blob/master/README.md)
+
 # PHP formatter for visual studio code
 
 Install [php formatter](https://marketplace.visualstudio.com/items?itemName=Sophisticode.php-formatter). More [info](https://github.com/Dickurt/vscode-php-formatter/wiki).
