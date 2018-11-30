@@ -1,4 +1,4 @@
-# Laravel Boilerplate - Laravel 5.6 API
+# Laravel Boilerplate - Laravel 5.7 API
 
 ## Requirements
 
