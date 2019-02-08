@@ -14,13 +14,14 @@ use Illuminate\Http\Request;
 */
 
 Route::group([ 'namespace' => 'Api' ], function() {
-  Route::group([ 'middleware' => [ 'oauthClient']], function() {
-    Route::post('/auth/login', 'Auth\OauthController@login');
-    Route::post('/auth/refresh-token', 'Auth\OauthController@refresh');
-    Route::post('/users/create', 'User\UsersController@create');
-  });
-  
-  Route::group([ 'middleware' => [ 'auth:api' ]], function() {
-    Route::get('/users/show', 'User\UsersController@show');
+  Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+  ], function ($router) {
+      Route::post('register', 'AuthController@register');
+      Route::post('login', 'AuthController@login');
+      Route::post('logout', 'AuthController@logout');
+      Route::post('refresh', 'AuthController@refresh');
+      Route::get('me', 'AuthController@me');
   });
 });

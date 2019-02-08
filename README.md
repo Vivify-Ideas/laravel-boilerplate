@@ -40,9 +40,8 @@ In order to run script all you have to do is run `chmod +x init && ./init`
 
 - Copy content from .env.example in .env (`cp .env.example .env`)
 
-- Install/Setup Passport by running (read more on https://laravel.com/docs/5.6/passport#introduction)
-  `docker exec -it laravel php artisan migrate`
-  `docker exec -it laravel php artisan passport:install`
+- Generate JWT secret key
+  `docker exec -it laravel php artisan jwt:secret`
 
 ### Set directory permissions
 

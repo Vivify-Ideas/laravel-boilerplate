@@ -52,11 +52,15 @@ if [ $? -ne 0 ]; then
     err "Error while generating app key."
 fi
 
+log "Generating JWT key"
+docker exec laravel php artisan jwt:secret && \
+docker exec laravel php artisan cache:clear
+if [ $? -ne 0 ]; then
+    err "Error while generating JWT key."
+fi
+
 log "Running database migrations"
 docker exec laravel php artisan migrate
-
-log "Generating OAuth client IDs"
-docker exec laravel php artisan passport:install
 if [ $? -ne 0 ]; then
     err "Error while running database migrations."
 fi

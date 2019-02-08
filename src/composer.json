@@ -10,11 +10,11 @@
         "darkaonline/l5-swagger": "5.7.*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
-        "laravel/passport": "^7.0",
         "laravel/tinker": "^1.0",
         "pda/pheanstalk": "^3.2",
         "pragmarx/health": "^0.9.15",
         "predis/predis": "^1.1",
+        "tymon/jwt-auth": "1.0.0-rc.3",
         "zircote/swagger-php": "2.0.*"
     },
     "require-dev": {
@@ -40,8 +40,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {
