@@ -11,5 +11,11 @@ COPY ./certs/self-signed/certificate.pem /certs/certificate.pem
 COPY ./certs/self-signed/privatekey.pem /certs/privatekey.pem
 COPY ./certs/self-signed/dh.pem /certs/dh.pem
 
+# Create storage dir
+RUN mkdir -p /app/storage/app/public
+
+# Create storage symlink
+RUN ln -s /app/storage/app/public /app/public/storage
+
 # Set www-data ownerships
-RUN chown -R www-data:www-data /app/public/uploads
+RUN chown -R www-data:www-data /app/public
