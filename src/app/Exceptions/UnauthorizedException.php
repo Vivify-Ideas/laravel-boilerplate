@@ -17,10 +17,9 @@ class UnauthorizedException extends Exception
     /**
      * Render the exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function render($request)
+    public function render()
     {
         return response()->json(['error' => self::MESSAGE], self::STATUS_CODE);
     }

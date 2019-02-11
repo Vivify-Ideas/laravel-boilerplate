@@ -31,7 +31,7 @@ class AuthService
      * @return array
      */
     public function login($credentials) {
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token=auth()->attempt($credentials)) {
             throw new UnauthorizedException;
         }
 
@@ -46,7 +46,7 @@ class AuthService
      * @return array
      */
     public function register($credentials) {
-        $user = User::create($credentials);
+        User::create($credentials);
 
         return $this->login($credentials);
     }
