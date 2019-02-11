@@ -1,9 +1,9 @@
-version: '3'
+version: "3"
 services:
-
   laravel:
-    image: vivifyideas/php-fpm-dev:7.2
+    image: vivifyideas/php-fpm-production-docker-alpine
     container_name: laravel
+    working_dir: /app
     volumes:
       - ./src:/app
 
@@ -40,8 +40,9 @@ services:
     image: "jonbaldie/beanstalkd"
 
   queue:
-    image: vivifyideas/php-fpm-dev:7.2
+    image: vivifyideas/php-fpm-production-docker-alpine
     container_name: queue
+    working_dir: /app
     command: php artisan queue:listen
     volumes:
       - ./src:/app
@@ -62,20 +63,19 @@ services:
     image: mariadb:10.2
     container_name: db
     environment:
-        MYSQL_DATABASE: laravel-boilerplate
-        MYSQL_USER: laravel
-        MYSQL_PASSWORD: laravel
-        MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel-boilerplate
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - 3306:3306
     volumes:
-        - mariadbdata:/var/lib/mysql
+      - mariadbdata:/var/lib/mysql
 
   mailhog:
     image: "mailhog/mailhog"
     ports:
-        - 8025:8025
+      - 8025:8025
 
 volumes:
-  esdata:
   mariadbdata:
