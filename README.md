@@ -71,6 +71,15 @@ We are using [Health Panel](https://github.com/antonioribeiro/health) to monitor
 - To enable Slack notifications change `webhook_url` in `services` config
 - For more details about Health Panel go to their [readme](https://github.com/antonioribeiro/health/blob/master/README.md)
 
+# Telescope
+
+[Laravel Telescope](https://laravel.com/docs/5.7/telescope) is included in this boilerplate.
+
+- By default telescope is only available if `APP_ENV` is `local`.
+- Telescope is accessible at `/telescope` route.
+- Telescope can be disabled globally with ENV variable `TELESCOPE_ENABLED`.
+- In order to enable telescope in other environments you have to override [`gate`](https://laravel.com/docs/5.7/telescope#dashboard-authorization) method and remove `isLocal` check from `register` method in `TelescopeServiceProvider`.
+
 # PHP formatter for visual studio code
 
 Install [php formatter](https://marketplace.visualstudio.com/items?itemName=Sophisticode.php-formatter). More [info](https://github.com/Dickurt/vscode-php-formatter/wiki).

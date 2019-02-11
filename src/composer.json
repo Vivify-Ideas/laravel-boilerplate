@@ -10,6 +10,7 @@
         "darkaonline/l5-swagger": "5.7.*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
+        "laravel/telescope": "^1.0",
         "laravel/tinker": "^1.0",
         "pda/pheanstalk": "^3.2",
         "pragmarx/health": "^0.9.15",
