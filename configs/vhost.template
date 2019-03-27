@@ -20,7 +20,7 @@ server {
     location ~ \.php$ {
         try_files $uri =404;
         include fastcgi_params;
-        fastcgi_pass laravel:9000;
+        fastcgi_pass ${LARAVEL_HOST}:${LARAVEL_PORT};
         fastcgi_read_timeout 10s;
         fastcgi_connect_timeout 10s;
         fastcgi_send_timeout 10s;
