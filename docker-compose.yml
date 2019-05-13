@@ -1,7 +1,9 @@
 version: "3"
 services:
   laravel:
-    image: vivifyideas/php-fpm-production-docker-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
     container_name: laravel
     working_dir: /app
     volumes:

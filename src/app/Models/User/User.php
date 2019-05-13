@@ -5,8 +5,8 @@ namespace App\Models\User;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class User extends Authenticatable implements JWTSubject
-{
+
+class User extends Authenticatable implements JWTSubject {
     use Notifiable;
 
 
@@ -63,7 +63,8 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return void
      */
-    public function setPasswordAttribute($rawPassword){
+    public function setPasswordAttribute($rawPassword)
+    {
         $this->attributes['password'] = bcrypt($rawPassword);
     }
 }

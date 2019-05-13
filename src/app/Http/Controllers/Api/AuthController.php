@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\UserLoginRequest;
 use App\Http\Requests\User\UserCreateRequest;
 
-class AuthController extends Controller
-{
-    private $authService;
+class AuthController extends Controller {
+    private $_authService;
 
     /**
      * Create a new AuthController instance.
@@ -19,7 +18,7 @@ class AuthController extends Controller
      */
     public function __construct(AuthService $authService)
     {
-        $this->authService = $authService;
+        $this->_authService = $authService;
 
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
@@ -58,7 +57,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
 
-        return response()->json($this->authService->login($credentials));
+        return response()->json($this->_authService->login($credentials));
     }
 
     /**
@@ -100,7 +99,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'name', 'password']);
 
-        return response()->json($this->authService->register($credentials));
+        return response()->json($this->_authService->register($credentials));
     }
 
     /**
@@ -165,8 +164,6 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return response()->json($this->authService->refresh());
+        return response()->json($this->_authService->refresh());
     }
-
-
 }

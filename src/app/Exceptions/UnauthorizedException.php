@@ -4,8 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class UnauthorizedException extends Exception
-{
+class UnauthorizedException extends Exception {
     const STATUS_CODE = 401;
     const MESSAGE = 'Unauthorized';
 
