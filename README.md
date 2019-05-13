@@ -14,7 +14,7 @@
 
 We've written bash script that will do all things that you would normally have to do manually.
 
-In order to run script all you have to do is run `chmod +x init && ./init`
+In order to run script all you have to do is run `chmod +x init && chmod +x pre-commit && ./init`
 
 > Script might ask you for your password at some point.
 
