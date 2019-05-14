@@ -5,8 +5,7 @@ namespace App\Services;
 use App\Models\User\User;
 use App\Exceptions\UnauthorizedException;
 
-class AuthService
-{
+class AuthService {
     /**
      * Get the token array structure.
      *
@@ -30,7 +29,8 @@ class AuthService
      *
      * @return array
      */
-    public function login($credentials) {
+    public function login($credentials)
+    {
         if (!$token=auth()->attempt($credentials)) {
             throw new UnauthorizedException;
         }
@@ -45,7 +45,8 @@ class AuthService
      *
      * @return array
      */
-    public function register($credentials) {
+    public function register($credentials)
+    {
         User::create($credentials);
 
         return $this->login($credentials);
@@ -56,7 +57,8 @@ class AuthService
      *
      * @return array
      */
-    public function refresh() {
+    public function refresh()
+    {
         $refreshedToken = auth()->refresh();
 
         return $this->_respondWithToken($refreshedToken);

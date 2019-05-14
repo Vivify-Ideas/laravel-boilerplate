@@ -70,3 +70,6 @@ sudo chmod -R 777 src/storage src/bootstrap/cache
 if [ $? -ne 0 ]; then
     err "Error while setting permissions."
 fi
+
+log "Copying the pre commit hook"
+cp pre-commit .git/hooks/pre-commit

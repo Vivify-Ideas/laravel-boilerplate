@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
-class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
-{
+class TelescopeServiceProvider extends TelescopeApplicationServiceProvider {
     /**
      * Register any application services.
      *

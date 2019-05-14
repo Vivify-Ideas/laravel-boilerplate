@@ -1,0 +1,7 @@
+FROM vivifyideas/php-fpm-production-docker-alpine
+
+RUN cd /home/ && wget https://github.com/Vivify-Ideas/coding-standard-php/archive/master.zip && unzip master.zip -d Standards && \
+    cd Standards && mv coding-standard-php-master Vivify && \
+    cd ../ && rm master.zip;
+
+RUN composer global require "squizlabs/php_codesniffer=3.*";
