@@ -6,16 +6,16 @@
     "type": "project",
     "require": {
         "php": "^7.2.7",
-        "barryvdh/laravel-cors": "^0.11.0",
-        "darkaonline/l5-swagger": "5.7.*",
+        "barryvdh/laravel-cors": "^0.11.3",
+        "darkaonline/l5-swagger": "5.8.*",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.7.*",
-        "laravel/telescope": "^1.0",
+        "laravel/framework": "5.8.*",
+        "laravel/telescope": "^2.0",
         "laravel/tinker": "^1.0",
-        "pda/pheanstalk": "^3.2",
-        "pragmarx/health": "^0.9.15",
+        "pda/pheanstalk": "^4.0",
+        "pragmarx/health": "^0.9.17",
         "predis/predis": "^1.1",
-        "tymon/jwt-auth": "1.0.0-rc.3",
+        "tymon/jwt-auth": "1.0.0-rc.4",
         "zircote/swagger-php": "2.0.*"
     },
     "require-dev": {
