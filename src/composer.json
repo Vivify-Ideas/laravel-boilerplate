@@ -10,6 +10,7 @@
         "darkaonline/l5-swagger": "5.8.*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
+        "laravel/socialite": "^4.1",
         "laravel/telescope": "^2.0",
         "laravel/tinker": "^1.0",
         "pda/pheanstalk": "^4.0",

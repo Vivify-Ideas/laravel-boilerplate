@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
-use App\Services\AuthService;
+use App\Services\Auth\AuthService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\UserLoginRequest;
 use App\Http\Requests\User\UserCreateRequest;
 
@@ -55,9 +54,9 @@ class AuthController extends Controller {
      */
     public function login(UserLoginRequest $request)
     {
-        $credentials = $request->only(['email', 'password']);
+        $credentials = $request->validated();
 
-        return response()->json($this->_authService->login($credentials));
+        return $this->_authService->login($credentials);
     }
 
     /**
@@ -97,9 +96,9 @@ class AuthController extends Controller {
      */
     public function register(UserCreateRequest $request)
     {
-        $credentials = $request->only(['email', 'name', 'password']);
+        $credentials = $request->validated();
 
-        return response()->json($this->_authService->register($credentials));
+        return $this->_authService->register($credentials);
     }
 
     /**
@@ -120,7 +119,7 @@ class AuthController extends Controller {
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return auth()->user();
     }
 
     /**
@@ -143,7 +142,7 @@ class AuthController extends Controller {
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return ['message' => 'Successfully logged out'];
     }
 
     /**
@@ -164,6 +163,6 @@ class AuthController extends Controller {
      */
     public function refresh()
     {
-        return response()->json($this->_authService->refresh());
+        return $this->_authService->refresh();
     }
 }

@@ -5,9 +5,19 @@ namespace App\Models\User;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable implements JWTSubject {
     use Notifiable;
+
+    const PASSWORD_LENGTH = 191;
+
+    const SOCIAL_FACEBOOK = 'facebook';
+    const SOCIAL_GOOGLE = 'google';
+    const SOCIAL_LOGINS = [
+        self::SOCIAL_FACEBOOK,
+        self::SOCIAL_GOOGLE
+    ];
 
 
     /**
@@ -26,7 +36,7 @@ class User extends Authenticatable implements JWTSubject {
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'social_id', 'social_type'
     ];
 
     /**
@@ -66,5 +76,17 @@ class User extends Authenticatable implements JWTSubject {
     public function setPasswordAttribute($rawPassword)
     {
         $this->attributes['password'] = bcrypt($rawPassword);
+    }
+
+    /**
+     * Search user by email
+     *
+     * @param Builder $query
+     * @param string $email
+     * @return Builder
+     */
+    public function scopeWithEmail(Builder $query, string $email) : Builder
+    {
+        return $query->where('email', $email);
     }
 }
