@@ -12,15 +12,15 @@
 */
 
 Route::group([ 'namespace' => 'Api' ], function () {
-    Route::group([ 'prefix' => 'auth', 'namespace' => 'Auth' ], function ($router) {
+    Route::group([ 'prefix' => 'auth', 'namespace' => 'Auth' ], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout');
         Route::post('refresh', 'AuthController@refresh');
         Route::get('me', 'AuthController@me');
 
-        Route::group([ 'prefix' => 'social' ], function ($router) {
-            Route::post('facebook', 'SocialAuthController@facebookLogin');
+        Route::group([ 'prefix' => 'social' ], function () {
+            Route::post('facebook', 'SocialAuthController@handleFacebookLogin');
             Route::post('google', 'SocialAuthController@handleGoogleLogin');
         });
     });

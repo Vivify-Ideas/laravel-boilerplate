@@ -21,7 +21,7 @@ class SocialSignInRequest extends FormRequest {
     public function rules()
     {
         return [
-            'accessToken' => 'required|string|max:191'
+            'accessToken' => 'required|string'
         ];
     }
 }

@@ -23,8 +23,20 @@ class SocialAuthController extends Controller {
     public function handleGoogleLogin(SocialSignInRequest $request): array
     {
         return $this->_socialAuthService->loginOrRegisterViaGoogle(
-            $request->get('accessToken'),
-            'google'
+            $request->get('accessToken')
+        );
+    }
+
+    /**
+     * Login or register with facebook account
+     *
+     * @param SocialSignInRequest $request
+     * @return array
+     */
+    public function handleFacebookLogin(SocialSignInRequest $request): array
+    {
+        return $this->_socialAuthService->loginOrRegisterViaFacebook(
+            $request->get('accessToken')
         );
     }
 }

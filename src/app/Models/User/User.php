@@ -89,4 +89,30 @@ class User extends Authenticatable implements JWTSubject {
     {
         return $query->where('email', $email);
     }
+
+    /**
+     * Find google user by social id
+     *
+     * @param Builder $query
+     * @param string $id
+     * @return Builder
+     */
+    public function scopeWithGoogleSocialId(Builder $query, string $id) : Builder
+    {
+        return $query->where('social_id', $id)
+            ->where('social_type', self::SOCIAL_GOOGLE);
+    }
+
+    /**
+     * Find facebook user by social id
+     *
+     * @param Builder $query
+     * @param string $id
+     * @return Builder
+     */
+    public function scopeWithFacebookSocialId(Builder $query, string $id) : Builder
+    {
+        return $query->where('social_id', $id)
+            ->where('social_type', self::SOCIAL_FACEBOOK);
+    }
 }

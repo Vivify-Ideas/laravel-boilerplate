@@ -4,9 +4,9 @@ namespace App\Exceptions\Auth;
 
 use App\Exceptions\BaseException;
 
-class EmailExistsException extends BaseException {
+class FacebookAuthFailedException extends BaseException {
     const STATUS_CODE = 401;
-    const MESSAGE = 'This email already exists';
+    const MESSAGE = 'Facebook API returned an error';
 
     public function __construct(...$context)
     {
