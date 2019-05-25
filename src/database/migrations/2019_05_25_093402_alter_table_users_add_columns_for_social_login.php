@@ -27,7 +27,8 @@ class AlterTableUsersAddColumnsForSocialLogin extends Migration {
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('google_id');
+            $table->dropColumn('social_type');
+            $table->dropColumn('social_id');
         });
     }
 }

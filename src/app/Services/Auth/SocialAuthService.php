@@ -73,6 +73,7 @@ class SocialAuthService {
             $providedUser->getRaw()['given_name'],
             $providedUser->getRaw()['family_name'],
             $providedUser->getId(),
+            $providedUser->getAvatar(),
             User::SOCIAL_GOOGLE
         );
     }
@@ -97,6 +98,7 @@ class SocialAuthService {
              $name_array[0],
              $name_array[1],
              $providedUser->getId(),
+             $providedUser->getAvatar(),
              User::SOCIAL_FACEBOOK
          );
     }
@@ -105,6 +107,7 @@ class SocialAuthService {
         string $firstName,
         string $lastName,
         string $socialId,
+        string $avatarUrl,
         string $provider
     ) : User {
         return User::create([
@@ -112,6 +115,7 @@ class SocialAuthService {
             'first_name' => $firstName,
             'last_name' => $lastName,
             'social_id' => $socialId,
+            'image' => $avatarUrl,
             'provider' => $provider,
             'password' => Str::random(User::PASSWORD_LENGTH),
         ]);
