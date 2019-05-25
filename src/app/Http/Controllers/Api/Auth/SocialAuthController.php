@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Services\Auth\SocialAuthService;
 use App\Http\Requests\Auth\SocialSignInRequest;
+use App\Services\Auth\Social\FacebookAuthService;
+use App\Services\Auth\Social\GoogleAuthService;
 
 class SocialAuthController extends Controller {
-    private $_socialAuthService;
+    private $_facebookAuthService;
+    private $_googleAuthService;
 
-    public function __construct(SocialAuthService $socialAuthService)
-    {
-        $this->_socialAuthService = $socialAuthService;
+    public function __construct(
+        FacebookAuthService $facebookAuthService,
+        GoogleAuthService $googleAuthService
+    ) {
+        $this->_facebookAuthService = $facebookAuthService;
+        $this->_googleAuthService = $googleAuthService;
     }
 
     /**
@@ -22,7 +27,7 @@ class SocialAuthController extends Controller {
      */
     public function handleGoogleLogin(SocialSignInRequest $request): array
     {
-        return $this->_socialAuthService->loginOrRegisterViaGoogle(
+        return $this->_googleAuthService->login(
             $request->get('accessToken')
         );
     }
@@ -35,7 +40,7 @@ class SocialAuthController extends Controller {
      */
     public function handleFacebookLogin(SocialSignInRequest $request): array
     {
-        return $this->_socialAuthService->loginOrRegisterViaFacebook(
+        return $this->_facebookAuthService->login(
             $request->get('accessToken')
         );
     }
