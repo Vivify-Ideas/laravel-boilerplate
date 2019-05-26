@@ -108,6 +108,17 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mobile URL
+    |--------------------------------------------------------------------------
+    |
+    | This url is used to launch a mobile app, this is expo token
+    |
+    */
+    'mobile_app_url' => env('MOBILE_APP_URL', 'https://exp.host/@PROJECT_NAME/PROJECT_SLUG'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

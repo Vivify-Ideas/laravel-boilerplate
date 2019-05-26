@@ -2,22 +2,10 @@
 namespace App\Rules\User;
 
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User\User;
+use Carbon\Carbon;
 
-class MatchCurrentPasswordRule implements Rule {
-
-    private $_user;
-
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct(User $user)
-    {
-        $this->_user = $user;
-    }
+class ForgotPasswordTokenExistsRule implements Rule {
 
     /**
      * Determine if the validation rule passes.
@@ -28,7 +16,12 @@ class MatchCurrentPasswordRule implements Rule {
      */
     public function passes($attribute, $value)
     {
-        return Hash::check($value, $this->_user->password);
+        $expiredTokenDate = Carbon::now()->subHours(24);
+        $user = User::where('forgot_password_token', $value)
+            ->whereDate('forgot_password_date', '>=', $expiredTokenDate)
+            ->first();
+
+        return !empty($user);
     }
 
     /**
@@ -38,6 +31,6 @@ class MatchCurrentPasswordRule implements Rule {
      */
     public function message()
     {
-        return 'Your current password is wrong, please try again.';
+        return 'Token is invalid or expired';
     }
 }

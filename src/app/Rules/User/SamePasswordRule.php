@@ -5,18 +5,20 @@ use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User\User;
 
-class MatchCurrentPasswordRule implements Rule {
+class SamePasswordRule implements Rule {
 
-    private $_user;
+    private $_currentPassword;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(string $token)
     {
-        $this->_user = $user;
+        $this->_currentPassword = User::where('forgot_password_token', $token)
+          ->pluck('password')
+          ->first();
     }
 
     /**
@@ -28,7 +30,7 @@ class MatchCurrentPasswordRule implements Rule {
      */
     public function passes($attribute, $value)
     {
-        return Hash::check($value, $this->_user->password);
+        return !Hash::check($value, $this->_currentPassword);
     }
 
     /**
@@ -38,6 +40,6 @@ class MatchCurrentPasswordRule implements Rule {
      */
     public function message()
     {
-        return 'Your current password is wrong, please try again.';
+        return 'Your new password match the old password';
     }
 }
