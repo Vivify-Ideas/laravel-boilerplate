@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Services\AuthService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\UserLoginRequest;
 use App\Http\Requests\User\UserCreateRequest;
 
@@ -97,7 +96,7 @@ class AuthController extends Controller {
      */
     public function register(UserCreateRequest $request)
     {
-        $credentials = $request->only(['email', 'name', 'password']);
+        $credentials = $request->validated();
 
         return response()->json($this->_authService->register($credentials));
     }

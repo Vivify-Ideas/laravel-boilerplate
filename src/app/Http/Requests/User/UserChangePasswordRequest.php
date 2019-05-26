@@ -3,8 +3,9 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\User\MatchCurrentPasswordRule;
 
-class UserCreateRequest extends FormRequest {
+class UserChangePasswordRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,10 +24,13 @@ class UserCreateRequest extends FormRequest {
     public function rules()
     {
         return [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+            'current_password' => [
+                'required',
+                'string',
+                'min:6',
+                new MatchCurrentPasswordRule(auth()->user())
+            ],
+            'new_password' => 'required|confirmed|string|min:6'
         ];
     }
 }

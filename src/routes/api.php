@@ -19,4 +19,13 @@ Route::group([ 'namespace' => 'Api' ], function () {
         Route::post('refresh', 'AuthController@refresh');
         Route::get('me', 'AuthController@me');
     });
+
+    Route::group([ 'middleware' => 'auth:api' ], function () {
+        Route::group([
+            'prefix' => 'user',
+            'namespace' => 'User'
+        ], function () {
+            Route::post('change-password', 'UserController@changePassword');
+        });
+    });
 });
