@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Mail\User\ForgotPasswordMail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use App\Constants\UserConstants;
 
 class ForgotPasswordService {
 
@@ -20,7 +21,7 @@ class ForgotPasswordService {
     public function sendForgotPasswordToken(string $email) : void
     {
         $user = User::withEmail($email)->first();
-        $user->forgot_password_token = Str::random(User::FORGOT_PASSWORD_LENGTH);
+        $user->forgot_password_token = Str::random(UserConstants::FORGOT_PASSWORD_LENGTH);
         $user->forgot_password_date = Carbon::now();
         $user->save();
 

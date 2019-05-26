@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
 class User extends Authenticatable implements JWTSubject {
     use Notifiable;
 
-    const FORGOT_PASSWORD_LENGTH = 191;
-
     /**
      * Route notifications for the Slack channel.
      *
@@ -28,7 +26,7 @@ class User extends Authenticatable implements JWTSubject {
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'avatar'
     ];
 
     /**
