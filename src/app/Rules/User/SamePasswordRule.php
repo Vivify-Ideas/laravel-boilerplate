@@ -40,6 +40,6 @@ class SamePasswordRule implements Rule {
      */
     public function message()
     {
-        return 'Your new password match the old password';
+        return 'Your new password matches the old password';
     }
 }
