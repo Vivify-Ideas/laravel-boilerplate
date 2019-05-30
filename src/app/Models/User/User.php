@@ -5,10 +5,10 @@ namespace App\Models\User;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable implements JWTSubject {
     use Notifiable;
-
 
     /**
      * Route notifications for the Slack channel.
@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject {
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'avatar'
     ];
 
     /**
@@ -36,6 +36,7 @@ class User extends Authenticatable implements JWTSubject {
      */
     protected $hidden = [
         'password', 'remember_token',
+        'forgot_password_token', 'forgot_password_date'
     ];
 
     /**
@@ -61,10 +62,35 @@ class User extends Authenticatable implements JWTSubject {
     /**
      * Hash raw user password when creating resource
      *
+     * @param string $rawPassword
      * @return void
      */
-    public function setPasswordAttribute($rawPassword)
+    public function setPasswordAttribute(string $rawPassword) : void
     {
         $this->attributes['password'] = bcrypt($rawPassword);
+    }
+
+    /**
+     * Search user by email
+     *
+     * @param Builder $query
+     * @param string $email
+     * @return void
+     */
+    public function scopeWithEmail(Builder $query, string $email) : Builder
+    {
+        return $query->where('email', $email);
+    }
+
+    /**
+     * Remove token and date for reset password
+     * from model
+     *
+     * @return void
+     */
+    public function resetForgotPasswordToken() : void
+    {
+        $this->forgot_password_token = null;
+        $this->forgot_password_date = null;
     }
 }
