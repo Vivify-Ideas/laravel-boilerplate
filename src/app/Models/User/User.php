@@ -37,7 +37,7 @@ class User extends Authenticatable implements JWTSubject {
      */
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'social_id', 'social_type',
-        'image'
+        'avatar'
     ];
 
     /**
@@ -47,6 +47,7 @@ class User extends Authenticatable implements JWTSubject {
      */
     protected $hidden = [
         'password', 'remember_token',
+        'forgot_password_token', 'forgot_password_date'
     ];
 
     /**
@@ -72,9 +73,10 @@ class User extends Authenticatable implements JWTSubject {
     /**
      * Hash raw user password when creating resource
      *
+     * @param string $rawPassword
      * @return void
      */
-    public function setPasswordAttribute($rawPassword)
+    public function setPasswordAttribute(string $rawPassword) : void
     {
         $this->attributes['password'] = bcrypt($rawPassword);
     }
@@ -115,5 +117,17 @@ class User extends Authenticatable implements JWTSubject {
     {
         return $query->where('social_id', $id)
             ->where('social_type', self::SOCIAL_FACEBOOK);
+    }
+
+    /*
+     * Remove token and date for reset password
+     * from model
+     *
+     * @return void
+     */
+    public function resetForgotPasswordToken() : void
+    {
+        $this->forgot_password_token = null;
+        $this->forgot_password_date = null;
     }
 }

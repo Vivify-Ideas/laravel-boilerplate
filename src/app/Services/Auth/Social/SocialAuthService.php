@@ -85,7 +85,7 @@ abstract class SocialAuthService {
             'last_name' => $lastName,
             'social_id' => $socialId,
             'social_type' => $provider,
-            'image' => $avatarUrl,
+            'avatar' => $avatarUrl,
             'password' => Str::random(User::PASSWORD_LENGTH),
         ]);
     }

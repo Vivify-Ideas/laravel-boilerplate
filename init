@@ -27,6 +27,13 @@ if ! type "docker-compose" > /dev/null 2>&1; then
 fi
 log "Looks like both docker and docker-compose are installed, everything looks good."
 
+echo "Do you want to include social login in your codebase? [y/n]"
+read socialLoginAnswer
+
+ if [ "$socialLoginAnswer" == "y" ]; then
+    git merge feature/social-logins
+fi
+
 log "Copying .env.example -> .env"
 cp src/.env.example src/.env
 if [ $? -ne 0 ]; then

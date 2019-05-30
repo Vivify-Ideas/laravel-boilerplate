@@ -24,4 +24,22 @@ Route::group([ 'namespace' => 'Api' ], function () {
             Route::post('google', 'SocialAuthController@handleGoogleLogin');
         });
     });
+
+    Route::group([
+        'prefix' => 'user',
+        'namespace' => 'User'
+    ], function () {
+        Route::post('forgot-password', 'ForgotPasswordController@forgotPassword');
+        Route::post('reset-password', 'ForgotPasswordController@resetPassword');
+    });
+
+    Route::group([ 'middleware' => 'auth:api' ], function () {
+        Route::group([
+            'prefix' => 'user',
+            'namespace' => 'User'
+        ], function () {
+            Route::post('change-password', 'UserController@changePassword');
+            Route::post('/', 'UserController@updateProfile');
+        });
+    });
 });
