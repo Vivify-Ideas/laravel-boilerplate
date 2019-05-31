@@ -43,6 +43,7 @@ services:
     volumes:
       - uploads:/app/public/uploads
       - build:/app/public/build
+      - storage-app:/app/public/public
 
   redis:
     container_name: redis
@@ -109,3 +110,4 @@ volumes:
   storage-app:
   logs-app:
   phpsessions:
+
