@@ -54,7 +54,9 @@ class UserService {
                 UserConstants::AVATAR_WIDTH,
                 UserConstants::AVATAR_HEIGHT
             );
-            $this->_filesService->removeImage($user->avatar);
+            if ($user->avatar) {
+                $this->_filesService->removeImage($user->avatar);
+            }
             $user->avatar = $this->_filesService->compressAndSaveImage(
                 $imagePath,
                 $compressImage
