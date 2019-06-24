@@ -16,24 +16,14 @@ services:
       - laravel
     environment:
       - NGINX_SERVER_NAME=_
-      - NGINX_PORT=80
-      - NGINX_SECURE_PORT=443
       - LARAVEL_HOST=laravel
       - LARAVEL_PORT=9000
       - NGINX_MAX_BODY=100M
-      - NGINX_SSL_CERT=/certs/certificate.pem
-      - NGINX_SSL_KEY=/certs/privatekey.pem
-      - NGINX_SSL_DH=/certs/dh.pem
-    command: /bin/bash -c "envsubst \"`for v in $$(compgen -v);do printf '$${%s} ' $$v;done`'\" < /etc/nginx/conf.d/vhost.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     ports:
-      - 80:80
-      - 443:443
+      - 8099:80
     volumes:
       - ./src:/app
-      - ./certs/self-signed/certificate.pem:/certs/certificate.pem
-      - ./certs/self-signed/privatekey.pem:/certs/privatekey.pem
-      - ./certs/self-signed/dh.pem:/certs/dh.pem
-      - ./configs/vhost.template:/etc/nginx/conf.d/vhost.template
+      - ./docker/vhost.template:/etc/nginx/conf.d/vhost.template
 
   redis:
     container_name: redis

@@ -1,18 +1,11 @@
 FROM vivifyideas/php-fpm-production-docker-alpine
 
-# Set working directory
-WORKDIR /app
+COPY ./docker/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
-# Copy all files to container
+WORKDIR /app
 COPY ./src /app
 
-# Copy custom.ini
-COPY ./configs/custom.ini /usr/local/etc/php/conf.d/custom.ini
+RUN set -ex && \
+	composer install --no-dev --no-scripts && \
+	chown -R www-data:www-data /app/storage /app/bootstrap/cache
 
-# Install dependencies
-RUN composer install --no-dev --no-scripts
-
-# Chown storage and boostrap cache as www-data user/group
-RUN chown -R www-data:www-data \
-    /app/storage \
-    /app/bootstrap/cache
