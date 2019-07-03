@@ -1,0 +1,20 @@
+FROM node:8
+
+ # Set working directory
+WORKDIR /ws
+
+ # Copy nodejs script and package.json
+COPY src/websockets/ .
+
+ # Set environment variables
+ENV NON_SECURE 1
+ENV NODE_ENV dev
+
+ # Install node modules
+RUN npm install
+
+ # Expose ports to host
+EXPOSE 9292 6020
+
+ # Run nodejs script
+CMD [ "node", "server.js" ]

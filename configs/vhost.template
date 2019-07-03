@@ -1,3 +1,7 @@
+upstream websocket {
+    server websockets:6020;
+}
+
 server {
     listen ${NGINX_SECURE_PORT} ssl;
     listen ${NGINX_PORT};
@@ -16,6 +20,16 @@ server {
     location / {
         try_files $uri /index.php?$args;
     }
+
+    location /deepstream {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header x-forwarded-proto https;
+    }
+
+    set $cdn_file default;
 
     location ~ \.php$ {
         try_files $uri =404;

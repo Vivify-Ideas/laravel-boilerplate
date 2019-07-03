@@ -76,6 +76,15 @@ services:
     volumes:
       - mariadbdata:/var/lib/mysql
 
+  websockets:
+    build:
+      context: .
+      dockerfile: Dockerfile-sockets
+    container_name: websockets
+    ports:
+      - 9292:9292
+      - 6020:6020
+
   mailhog:
     image: "mailhog/mailhog"
     ports:

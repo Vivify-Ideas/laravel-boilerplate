@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\Models\User\User;
 use App\Exceptions\UnauthorizedException;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Socket\UserCreated;
+use App\Channels\Socket\SocketChannel;
 
 class AuthService {
     /**
@@ -47,7 +50,9 @@ class AuthService {
      */
     public function register($credentials)
     {
-        User::create($credentials);
+        $user = User::create($credentials);
+        Notification::route(SocketChannel::class, null)
+            ->notify(new UserCreated($user));
 
         return $this->login($credentials);
     }
