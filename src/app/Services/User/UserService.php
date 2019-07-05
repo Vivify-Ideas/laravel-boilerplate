@@ -7,6 +7,7 @@ use App\Services\File\FilesService;
 use Illuminate\Http\UploadedFile;
 use App\Constants\UserConstants;
 use App\Types\File\CompressImage;
+use Illuminate\Support\Collection;
 
 class UserService {
 
@@ -66,5 +67,21 @@ class UserService {
         }
 
         return $user;
+    }
+
+    /**
+     * Search users and paginate by passed size
+     *
+     * @param string $term
+     * @param integer $page
+     * @return Collection
+     */
+    public function search(string $term, int $size) : Collection
+    {
+        return User::where('first_name', 'LIKE', "%{$term}%")
+            ->orWhere('last_name', 'LIKE', "%{$term}%")
+            ->orWhere('email', 'LIKE', "%{$term}%")
+            ->limit($size)
+            ->get();
     }
 }

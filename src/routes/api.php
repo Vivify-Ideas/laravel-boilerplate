@@ -29,12 +29,27 @@ Route::group([ 'namespace' => 'Api' ], function () {
     });
 
     Route::group([ 'middleware' => 'auth:api' ], function () {
+        Route::get('user/search', 'User\UserController@search');
+
         Route::group([
             'prefix' => 'user',
             'namespace' => 'User'
         ], function () {
             Route::post('change-password', 'UserController@changePassword');
             Route::post('/', 'UserController@updateProfile');
+        });
+
+        Route::group([
+            'prefix' => 'chats',
+            'namespace' => 'Chat'
+            // 'middleware' => 'can:accessChat,conversation'
+        ], function () {
+            Route::get('/', 'ChatController@index');
+            Route::post('/start', 'ChatController@store');
+            Route::get('/{conversation}', 'ChatMessageController@index')
+                ->middleware('can:partOfConversation,conversation');
+            Route::post('/{conversation}/messages', 'ChatMessageController@store')
+                ->middleware('can:partOfConversation,conversation');
         });
     });
 });

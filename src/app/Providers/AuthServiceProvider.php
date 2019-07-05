@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Musonza\Chat\Models\Conversation;
+use App\Policies\ConversationMessagePolicy;
 
 class AuthServiceProvider extends ServiceProvider {
     /**
@@ -12,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider {
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        Conversation::class => ConversationMessagePolicy::class
     ];
 
     /**
