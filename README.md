@@ -71,6 +71,14 @@ We are using [Health Panel](https://github.com/antonioribeiro/health) to monitor
 - To enable Slack notifications change `webhook_url` in `services` config
 - For more details about Health Panel go to their [readme](https://github.com/antonioribeiro/health/blob/master/README.md)
 
+# Sentry
+
+To configure Sentry, go to the [Sentry](https://sentry.io) and create project for laravel and then just populate **.env** file with your project information:
+
+```
+SENTRY_LARAVEL_DSN=https://<key>@sentry.io/<project>
+```
+
 # Telescope
 
 [Laravel Telescope](https://laravel.com/docs/5.7/telescope) is included in this boilerplate.
