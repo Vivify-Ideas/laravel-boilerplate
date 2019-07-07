@@ -26,6 +26,36 @@ class UserController extends Controller {
     }
 
     /**
+     * @SWG\Post(
+     *   tags={"User"},
+     *   path="/user/change-password",
+     *   summary="Change user password",
+     *   operationId="usersChangePassword",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="current_password",
+     *     in="formData",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="new_password",
+     *     in="formData",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="new_password_confirmation",
+     *     in="formData",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   security={{"authorization_token":{}}},
+     *   @SWG\Response(response=200, description="Successful operation"),
+     *   @SWG\Response(response=401, description="Unauthorized"),
+     *   @SWG\Response(response=422, description="Validation failed"),
+     *   @SWG\Response(response=500, description="Internal server error")
+     * )
      * Change active user password to the new one
      *
      * @param UserChangePasswordRequest $request
@@ -42,7 +72,38 @@ class UserController extends Controller {
     }
 
     /**
-     * Update users profile
+     * @SWG\Post(
+     *   tags={"User"},
+     *   path="/user",
+     *   summary="Change user first name, last name and avatar",
+     *   operationId="userUpdateProfile",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="first_name",
+     *     in="formData",
+     *     required=false,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="last_name",
+     *     in="formData",
+     *     required=false,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="avatar",
+     *     in="formData",
+     *     required=false,
+     *     type="file"
+     *   ),
+     *   security={{"authorization_token":{}}},
+     *   @SWG\Response(response=200, description="Successful operation"),
+     *   @SWG\Response(response=401, description="Unauthorized"),
+     *   @SWG\Response(response=422, description="Validation failed"),
+     *   @SWG\Response(response=500, description="Internal server error")
+     * )
+     *
+     * Update user profile information and avatar
      *
      * @param UpdateProfileRequest $request
      * @return void

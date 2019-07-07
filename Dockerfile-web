@@ -1,21 +1,16 @@
-FROM nginx:1.10.2
+FROM nginx:1-alpine
 
-# Copy built static assets to laravel container
+COPY ./docker/entrypoint-web.sh /entrypoint-web.sh
 COPY ./src/public /app/public
 
-# Copy vhost
-COPY ./configs/vhost.template /etc/nginx/conf.d/vhost.template
+RUN set -ex && \
+	apk add --no-cache bash && \
+	mkdir -p /app/storage/app/public && \
+	ln -s /app/storage/app/public /app/public/storage && \
+	chown -R nginx:nginx /app/public && \
+	chmod +x /entrypoint-web.sh
 
-# Copy selfsigned certs
-COPY ./certs/self-signed/certificate.pem /certs/certificate.pem
-COPY ./certs/self-signed/privatekey.pem /certs/privatekey.pem
-COPY ./certs/self-signed/dh.pem /certs/dh.pem
+COPY ./docker/vhost.template /etc/nginx/conf.d/vhost.template
 
-# Create storage dir
-RUN mkdir -p /app/storage/app/public
+CMD ["/entrypoint-web.sh"]
 
-# Create storage symlink
-RUN ln -s /app/storage/app/public /app/public/storage
-
-# Set www-data ownerships
-RUN chown -R www-data:www-data /app/public

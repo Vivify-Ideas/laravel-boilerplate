@@ -18,6 +18,7 @@
         "pda/pheanstalk": "^4.0",
         "pragmarx/health": "^0.9.17",
         "predis/predis": "^1.1",
+        "sentry/sentry-laravel": "1.1.0",
         "tymon/jwt-auth": "1.0.0-rc.4",
         "zircote/swagger-php": "2.0.*"
     },

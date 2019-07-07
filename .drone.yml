@@ -1,0 +1,77 @@
+kind: pipeline
+name: {PROJECT_NAME}
+
+steps:
+  - name: tag
+    image: alpine
+    commands:
+      - apk add --no-cache git
+      - echo -n $(git rev-parse --abbrev-ref HEAD) > .tags
+      - cat .tags
+
+  - name: laravel
+    image: plugins/docker
+    volumes:
+      - name: docker_cache
+        path: /var/lib/docker
+    settings:
+      registry: registry.vivifyideas.com
+      repo: registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-laravel
+      dockerfile: Dockerfile
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+
+  - name: web
+    image: plugins/docker
+    volumes:
+      - name: docker_cache
+        path: /var/lib/docker
+    settings:
+      registry: registry.vivifyideas.com
+      repo: registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-web
+      dockerfile: Dockerfile-web
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+
+  - name: deploy
+    image: appleboy/drone-ssh
+    settings:
+      command_timeout: 5m
+      host: {HOSTNAME}
+      username: {USERNAME}
+      ssh_key:
+        from_secret: ssh_key
+      port: 22
+      script:
+        - cd ~/{PATH}
+        - docker pull registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-web:{BRANCH}
+        - docker pull registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-laravel:{BRANCH}
+        - docker service update --force --with-registry-auth --image registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-web:{BRANCH} {STACK}_web
+        - docker service update --force --with-registry-auth --image registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-laravel:{BRANCH} {STACK}_laravel
+        - docker service update --force --with-registry-auth --image registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-laravel:{BRANCH} {STACK}_worker
+        - docker exec $(docker ps | grep api-stage_laravel | awk '{print $1}' | head -n 1) php artisan config:cache
+
+  - name: slack
+    image: plugins/slack
+    when:
+      status: [ success, failure ]
+    settings:
+      webhook:
+        from_secret: slack_webhook
+      channel: {SLACK_CHANNEL}
+
+trigger:
+  branch:
+    - {BRANCH}
+  event:
+    - push
+
+volumes:
+- name: docker_cache
+  host:
+    path: /mnt/drone-docker
+
