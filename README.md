@@ -71,6 +71,14 @@ We are using [Health Panel](https://github.com/antonioribeiro/health) to monitor
 - To enable Slack notifications change `webhook_url` in `services` config
 - For more details about Health Panel go to their [readme](https://github.com/antonioribeiro/health/blob/master/README.md)
 
+# Sentry
+
+To configure Sentry, go to the [Sentry](https://sentry.io) and create project for laravel and then just populate **.env** file with your project information:
+
+```
+SENTRY_LARAVEL_DSN=https://<key>@sentry.io/<project>
+```
+
 # Telescope
 
 [Laravel Telescope](https://laravel.com/docs/5.7/telescope) is included in this boilerplate.
@@ -83,6 +91,12 @@ We are using [Health Panel](https://github.com/antonioribeiro/health) to monitor
 # PHP formatter for visual studio code
 
 Install [php formatter](https://marketplace.visualstudio.com/items?itemName=Sophisticode.php-formatter). More [info](https://github.com/Dickurt/vscode-php-formatter/wiki).
+
+# Configure PHP Code Sniffer for Visual Studio Code
+
+- Install [phpcs](https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs).
+- Clone [Vivify Ideas Coding Standards](https://github.com/Vivify-Ideas/coding-standard-php) and **make sure folder name is Vivify**
+- Open User Settings in VS Code and add `"phpcs.standard": "path_to_Vivify_folder_that_you_just_cloned"`
 
 # Notes for Production/Staging environment
 

@@ -23,8 +23,28 @@ class ForgotPasswordController extends Controller {
         $this->_forgotPasswordService = $forgotPasswordService;
     }
 
+
     /**
-     * Send an email to the user with token for reset password
+     * @SWG\Post(
+     *   tags={"User"},
+     *   path="/user/forgot-password",
+     *   summary="Send a forgot password email with link",
+     *   operationId="userForgotPassword",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="email",
+     *     in="formData",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   security={{"authorization_token":{}}},
+     *   @SWG\Response(response=200, description="Successful operation"),
+     *   @SWG\Response(response=401, description="Unauthorized"),
+     *   @SWG\Response(response=422, description="Validation failed"),
+     *   @SWG\Response(response=500, description="Internal server error")
+     * )
+     *
+     * Send forgot password link in email
      *
      * @param ForgotPasswordRequest $request
      * @return void
@@ -41,6 +61,37 @@ class ForgotPasswordController extends Controller {
     }
 
     /**
+     * @SWG\Post(
+     *   tags={"User"},
+     *   path="/user/reset-password",
+     *   summary="Reset password ",
+     *   operationId="userResetPassword",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     name="token",
+     *     in="formData",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="password",
+     *     in="formData",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="password_confirmation",
+     *     in="formData",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   security={{"authorization_token":{}}},
+     *   @SWG\Response(response=200, description="Successful operation"),
+     *   @SWG\Response(response=401, description="Unauthorized"),
+     *   @SWG\Response(response=422, description="Validation failed"),
+     *   @SWG\Response(response=500, description="Internal server error")
+     * )
+     *
      * Change user password
      *
      * @param ResetPasswordRequest $request
