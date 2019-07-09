@@ -5,7 +5,7 @@ namespace App\Exceptions\Auth;
 use App\Exceptions\BaseException;
 
 class EmailExistsException extends BaseException {
-    const STATUS_CODE = 401;
+    const STATUS_CODE = 422;
     const MESSAGE = 'This email already exists';
 
     public function __construct(...$context)
