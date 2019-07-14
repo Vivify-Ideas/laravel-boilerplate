@@ -43,6 +43,13 @@ class AuthController extends Controller {
      *     required=true,
      *     type="string"
      *   ),
+     *   @SWG\Parameter(
+     *     name="g-recaptcha-response",
+     *     in="formData",
+     *     description="Google ReCaptcha Response",
+     *     required=false,
+     *     type="string"
+     *   ),
      *   @SWG\Response(response=200, description="Successful operation"),
      *   @SWG\Response(response=401, description="Unauthorized"),
      *   @SWG\Response(response=422, description="Validation failed"),
@@ -85,6 +92,13 @@ class AuthController extends Controller {
      *     in="formData",
      *     description="[someUniqueValue]",
      *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="g-recaptcha-response",
+     *     in="formData",
+     *     description="Google ReCaptcha Response",
+     *     required=false,
      *     type="string"
      *   ),
      *   @SWG\Response(response=200, description="Successful operation"),
