@@ -71,6 +71,19 @@ We are using [Health Panel](https://github.com/antonioribeiro/health) to monitor
 - To enable Slack notifications change `webhook_url` in `services` config
 - For more details about Health Panel go to their [readme](https://github.com/antonioribeiro/health/blob/master/README.md)
 
+# ReCaptcha
+
+If you want to use Google ReCaptcha, you can enabled it in **recaptcha.php** and add **RECAPTCHA_SECRET_KEY** in your .env file. Your configuration would look like this if you enable it:
+```
+<?php
+
+return [
+  'enabled' => true,
+  'secret' => env('RECAPTCHA_SECRET_KEY')
+];
+```
+Rule for ReCaptcha is already applied in **UserLoginRequest** and in **UserCreateRequest**.
+
 # Sentry
 
 To configure Sentry, go to the [Sentry](https://sentry.io) and create project for laravel and then just populate **.env** file with your project information:

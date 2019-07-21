@@ -19,7 +19,7 @@ class AuthController extends Controller {
     {
         $this->_authService = $authService;
 
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'refresh']]);
     }
 
     /**
@@ -41,6 +41,13 @@ class AuthController extends Controller {
      *     in="formData",
      *     description="[someUniqueValue]",
      *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="g-recaptcha-response",
+     *     in="formData",
+     *     description="Google ReCaptcha Response",
+     *     required=false,
      *     type="string"
      *   ),
      *   @SWG\Response(response=200, description="Successful operation"),
@@ -85,6 +92,13 @@ class AuthController extends Controller {
      *     in="formData",
      *     description="[someUniqueValue]",
      *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="g-recaptcha-response",
+     *     in="formData",
+     *     description="Google ReCaptcha Response",
+     *     required=false,
      *     type="string"
      *   ),
      *   @SWG\Response(response=200, description="Successful operation"),

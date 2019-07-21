@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
-class UnauthorizedException extends BaseException {
+class TokenExpiredException extends BaseException {
     const STATUS_CODE = 401;
-    const MESSAGE = 'Unauthorized';
+    const MESSAGE = 'Token has expired';
 
     public function __construct()
     {

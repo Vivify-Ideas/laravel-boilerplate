@@ -5,43 +5,33 @@ namespace App\Exceptions;
 use Exception;
 
 class BaseException extends Exception {
-    private $_context;
+    protected $context;
 
-    /**
-     * Undocumented function
-     *
-     * @param integer $responseCode
-     * @param string $exceptionMessage
-     * @param array ...$context
-     */
-    public function __construct(int $responseCode, string $exceptionMessage, ...$context)
+    public function __construct(string $message, int $code)
     {
-        parent::__construct($exceptionMessage, $responseCode);
-        $this->_context = $context;
+        parent::__construct($message, $code);
     }
 
-    /**
-     * Log error the to laravel.log file
-     *
-     * @return void
-     */
     final public function report()
     {
-        \Log::debug($this->message, $this->_context);
+        \Log::debug($this->message, $this->context);
     }
 
     /**
-     * Returns the error in json format, and if app is in debug mode
-     * then we render complete error
+     * Render the exception into an HTTP response.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     final public function render()
     {
-        $responseBody = ['error' => $this->message];
+        $responseBody = [
+            'error' => $this->message
+        ];
+
         if (config('app.debug')) {
-            $responseBody['context'] = $this->_context;
+            $responseBody['context'] = $this->context;
         }
+
         return response()->json($responseBody, $this->code);
     }
 }

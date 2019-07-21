@@ -10,6 +10,7 @@ class FacebookAuthFailedException extends BaseException {
 
     public function __construct(...$context)
     {
-        parent::__construct(self::STATUS_CODE, self::MESSAGE, ...$context);
+        parent::__construct(self::MESSAGE, self::STATUS_CODE);
+        $this->context = $context;
     }
 }
