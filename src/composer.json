@@ -10,6 +10,7 @@
         "darkaonline/l5-swagger": "5.8.*",
         "deepstreamhub/deepstream.io-client-php": "^1.0",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.4",
         "laravel/framework": "5.8.*",
         "laravel/telescope": "^2.0",
@@ -26,7 +27,9 @@
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^2.0",
-        "phpunit/phpunit": "^7.0"
+        "phploc/phploc": "*",
+        "phpunit/phpunit": "^7.0",
+        "sebastian/phpcpd": "^4.1"
     },
     "autoload": {
         "classmap": [
@@ -57,7 +60,8 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"
-        ]
+        ],
+        "analyze": "phploc ./app && phpcpd ./app --min-lines=3 --min-tokens=20"
     },
     "config": {
         "preferred-install": "dist",
