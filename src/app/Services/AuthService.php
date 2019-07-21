@@ -7,6 +7,9 @@ use App\Exceptions\UnauthorizedException;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Socket\UserCreated;
 use App\Channels\Socket\SocketChannel;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use App\Exceptions\TokenExpiredException;
 
 class AuthService {
     /**
@@ -64,7 +67,13 @@ class AuthService {
      */
     public function refresh()
     {
-        $refreshedToken = auth()->refresh();
+        $token = JWTAuth::getToken();
+
+        try {
+            $refreshedToken = JWTAuth::refresh($token);
+        } catch (TokenBlacklistedException $exception) {
+            throw new TokenExpiredException();
+        }
 
         return $this->_respondWithToken($refreshedToken);
     }
