@@ -2,24 +2,12 @@
 
 namespace App\Exceptions;
 
-use Exception;
-
-class UnauthorizedException extends Exception {
+class UnauthorizedException extends BaseException {
     const STATUS_CODE = 401;
     const MESSAGE = 'Unauthorized';
 
     public function __construct()
     {
-        parent::__construct(self::MESSAGE);
-    }
-
-    /**
-     * Render the exception into an HTTP response.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function render()
-    {
-        return response()->json(['error' => self::MESSAGE], self::STATUS_CODE);
+        parent::__construct(self::MESSAGE, self::STATUS_CODE);
     }
 }

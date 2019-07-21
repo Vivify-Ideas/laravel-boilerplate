@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
-class NotVerifiedEmailException extends BaseException {
+class TokenExpiredException extends BaseException {
     const STATUS_CODE = 401;
-    const MESSAGE = 'Email is not verified';
+    const MESSAGE = 'Token has expired';
 
     public function __construct()
     {
