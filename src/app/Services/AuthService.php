@@ -7,6 +7,8 @@ use App\Exceptions\UnauthorizedException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use App\Exceptions\TokenExpiredException;
+use App\Notifications\PushNotifications\WelcomeNotification;
+use Carbon\Carbon;
 
 class AuthService {
     /**
@@ -50,7 +52,10 @@ class AuthService {
      */
     public function register($credentials)
     {
-        User::create($credentials);
+        $user = User::create($credentials);
+        $user->notify((new WelcomeNotification())->delay(
+            Carbon::now()->addMinutes(5)
+        ));
 
         return $this->login($credentials);
     }
