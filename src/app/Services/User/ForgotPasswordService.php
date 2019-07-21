@@ -40,7 +40,7 @@ class ForgotPasswordService {
      */
     public function resetPassword(string $token, string $password) : User
     {
-        $user = User::where('forgot_password_token', $token)->first();
+        $user = User::where('forgot_password_token', $token)->firstOrFail();
         $user->password = $password;
         $user->resetForgotPasswordToken();
         $user->save();
