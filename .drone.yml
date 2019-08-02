@@ -1,59 +1,73 @@
 kind: pipeline
 name: {PROJECT_NAME}
 
+trigger:
+  branch:
+    - {BRANCH}
+  event:
+    - push
+
+volumes:
+  - name: docker_daemon
+    host:
+      path: /var/run/docker.sock
+  - name: docker_cache
+    host:
+      path: /mnt/drone-docker
+
 steps:
   - name: tag
     image: alpine
     commands:
       - apk add --no-cache git
-      - echo -n $(git rev-parse --abbrev-ref HEAD) > .tags
-      - cat .tags
+      - echo "export BRANCH="$(git rev-parse --abbrev-ref HEAD) > .tag
+      - echo "export COMMIT="$(git rev-parse --short HEAD) >> .tag
+      - cat .tag
 
-  - name: laravel
-    image: plugins/docker
+  - name: build laravel
+    image: docker:dind
+    environment:
+      REGISTRY_USER:
+        from_secret: docker_username
+      REGISTRY_PASS:
+        from_secret: docker_password
     volumes:
       - name: docker_cache
         path: /var/lib/docker
-    settings:
-      registry: registry.vivifyideas.com
-      repo: registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-laravel
-      dockerfile: Dockerfile
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
+      - name: docker_daemon
+        path: /var/run/docker.sock
+    commands:
+      - source .tag
+      - docker login -u $REGISTRY_USER -p $REGISTRY_PASS registry.vivifyideas.com
+      - docker build -t registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}:$BRANCH --pull=true .
+      - docker push registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}:$BRANCH
+      - docker image prune -f
 
-  - name: web
-    image: plugins/docker
+  - name: build laravel
+    image: docker:dind
+    environment:
+      REGISTRY_USER:
+        from_secret: docker_username
+      REGISTRY_PASS:
+        from_secret: docker_password
     volumes:
       - name: docker_cache
         path: /var/lib/docker
-    settings:
-      registry: registry.vivifyideas.com
-      repo: registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-web
-      dockerfile: Dockerfile-web
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
+      - name: docker_daemon
+        path: /var/run/docker.sock
+    commands:
+      - source .tag
+      - docker login -u $REGISTRY_USER -p $REGISTRY_PASS registry.vivifyideas.com
+      - docker build -f Dockerfile-web -t registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}:$BRANCH --pull=true .
+      - docker push registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}:$BRANCH
+      - docker image prune -f
 
   - name: deploy
-    image: appleboy/drone-ssh
-    settings:
-      command_timeout: 5m
-      host: {HOSTNAME}
-      username: {USERNAME}
-      ssh_key:
-        from_secret: ssh_key
-      port: 22
-      script:
-        - cd ~/{PATH}
-        - docker pull registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-web:{BRANCH}
-        - docker pull registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-laravel:{BRANCH}
-        - docker service update --force --with-registry-auth --image registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-web:{BRANCH} {STACK}_web
-        - docker service update --force --with-registry-auth --image registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-laravel:{BRANCH} {STACK}_laravel
-        - docker service update --force --with-registry-auth --image registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}-laravel:{BRANCH} {STACK}_worker
-        - docker exec $(docker ps | grep api-stage_laravel | awk '{print $1}' | head -n 1) php artisan config:cache
+    image: alpine
+    commands:
+      - apk add --no-cache curl
+      - source .tag
+      - sh deploy.sh
 
   - name: slack
     image: plugins/slack
@@ -63,15 +77,4 @@ steps:
       webhook:
         from_secret: slack_webhook
       channel: {SLACK_CHANNEL}
-
-trigger:
-  branch:
-    - {BRANCH}
-  event:
-    - push
-
-volumes:
-- name: docker_cache
-  host:
-    path: /mnt/drone-docker
 

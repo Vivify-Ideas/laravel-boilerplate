@@ -16,7 +16,12 @@ class AppServiceProvider extends ServiceProvider {
     public function boot()
     {
         Schema::defaultStringLength(191);
+
         User::observe(UserObserver::class);
+
+        if (\App::environment(['staging', 'production'])) {
+            \URL::forceScheme('https');
+        }
     }
 
     /**
