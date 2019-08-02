@@ -7,9 +7,10 @@ use Exception;
 class BaseException extends Exception {
     protected $context;
 
-    public function __construct(string $message, int $code)
+    public function __construct(string $message, int $code, ...$context)
     {
         parent::__construct($message, $code);
+        $this->context = $context;
     }
 
     final public function report()

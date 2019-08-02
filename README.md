@@ -59,7 +59,7 @@ In order to run script all you have to do is run `chmod +x init && chmod +x pre-
 
   > In case that you are using custom domain, swap `localhost` with your custom domain.
 
-  > App is available on both `http` and `https` (keep in mind that https is using self-signed certificates)
+  > App is available on through `http` port 80
 
 # Health panel details
 
@@ -126,3 +126,4 @@ We suggest using our docker registry (`registry.vivifyideas.com`) for those envi
 - Nginx at ports 80/443
 - MariaDB at port 3306
 - Portainer at port 9000
+
