@@ -10,7 +10,6 @@ class GoogleAuthFailedException extends BaseException {
 
     public function __construct(...$context)
     {
-        parent::__construct(self::MESSAGE, self::STATUS_CODE);
-        $this->context = $context;
+        parent::__construct(self::MESSAGE, self::STATUS_CODE, $context);
     }
 }
