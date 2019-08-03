@@ -36,10 +36,15 @@ class ExpoNotification extends Notification implements ShouldQueue {
 
     public function toExpoPush($notifiable)
     {
-        return ExpoMessage::create()
+        $expoMessage = ExpoMessage::create()
             ->title($this->title)
             ->body($this->body)
-            ->setJsonData($this->data)
             ->setTtl(self::TTL);
+
+        if (isset($data)) {
+            $expoMessage->setJsonData($this->data);
+        }
+
+        return $expoMessage;
     }
 }
