@@ -6,6 +6,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
+use App\Constants\UserConstants;
 
 class User extends Authenticatable implements JWTSubject {
     use Notifiable;
@@ -92,5 +94,15 @@ class User extends Authenticatable implements JWTSubject {
     {
         $this->forgot_password_token = null;
         $this->forgot_password_date = null;
+    }
+
+    /**
+     * Generate email verification token
+     *
+     * @return void
+     */
+    public function generateVerifyToken()
+    {
+        $this->verify_token = Str::random(UserConstants::VERIFY_EMAIL_TOKEN_LENGTH);
     }
 }
