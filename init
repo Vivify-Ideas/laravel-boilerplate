@@ -31,7 +31,7 @@ echo "Do you want to include social login in your codebase? [y/n]"
 read socialLoginAnswer
 
  if [ "$socialLoginAnswer" == "y" ]; then
-    git merge feature/social-logins
+    git merge feature/social-logins-6
 fi
 
 log "Copying .env.example -> .env"
