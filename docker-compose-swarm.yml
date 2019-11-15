@@ -1,0 +1,65 @@
+version: '3'
+services:
+  laravel:
+    image: registry.vivifyideas.com/{namespace}/laravel:{branch}
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - cache:/app/bootstrap/cache
+      - uploads:/app/public/uploads
+      - build:/app/public/build
+      - storage:/app/storage/app/public
+      - phpsessions:/tmp
+      - ./.env:/app/.env
+
+  web:
+    image: registry.vivifyideas.com/{namespace}/web:{branch}
+    deploy:
+     restart_policy:
+       condition: on-failure
+    environment:
+      - NGINX_MAX_BODY=100M
+    ports:
+      - 80:80
+    volumes:
+      - uploads:/app/public/uploads
+      - build:/app/public/build
+      - storage:/app/public/public
+
+  redis:
+    image: "redis:alpine"
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  beanstalk:
+    image: "jonbaldie/beanstalkd"
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  db:
+    image: mariadb:10.2
+    deploy:
+      restart_policy:
+        condition: on-failure
+    environment:
+        MYSQL_DATABASE: laravel-boilerplate
+        MYSQL_USER: laravel
+        MYSQL_PASSWORD: laravel
+        MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+        - db:/var/lib/mysql
+
+volumes:
+  cache:
+  uploads:
+  build:
+  storage:
+  phpsessions:
+  db:
+
