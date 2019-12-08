@@ -1,0 +1,27 @@
+# vim: ft=nginx
+
+server {
+	listen 80;
+	server_name _;
+	root /app/public;
+
+	client_max_body_size ${NGINX_MAX_BODY};
+
+	location / {
+		try_files $uri /index.php?$args;
+	}
+
+	location ~ \.php$ {
+		try_files $uri =404;
+		include fastcgi_params;
+		fastcgi_pass laravel:9000;
+		fastcgi_read_timeout 10s;
+		fastcgi_connect_timeout 10s;
+		fastcgi_send_timeout 10s;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_hide_header x-powered-by;
+	}
+
+}

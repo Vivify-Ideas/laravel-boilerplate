@@ -11,6 +11,8 @@ class UserConstants {
 
     const FORGOT_PASSWORD_LENGTH = 191;
 
+    const VERIFY_EMAIL_TOKEN_LENGTH = 191;
+
     const AVATAR_WIDTH = 200;
 
     const AVATAR_HEIGHT = 200;

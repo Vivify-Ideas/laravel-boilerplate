@@ -99,4 +99,5 @@ return [
         ],
     ],
 
+    'verify_by_email' => true
 ];
