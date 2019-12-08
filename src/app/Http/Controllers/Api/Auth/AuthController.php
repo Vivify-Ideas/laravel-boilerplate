@@ -19,7 +19,8 @@ class AuthController extends Controller {
     {
         $this->_authService = $authService;
 
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'refresh']]);
+        $this->middleware('auth:api', ['except' => [ 'login', 'register', 'refresh' ]]);
+        $this->middleware('email-verified', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -74,7 +75,14 @@ class AuthController extends Controller {
      *   operationId="register",
      *   produces={"application/json"},
      *   @SWG\Parameter(
-     *     name="name",
+     *     name="first_name",
+     *     in="formData",
+     *     description="ex. John Doe",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="last_name",
      *     in="formData",
      *     description="ex. John Doe",
      *     required=true,

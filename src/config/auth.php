@@ -98,4 +98,6 @@ return [
             'expire' => 60,
         ],
     ],
+
+    'verify_by_email' => true
 ];
