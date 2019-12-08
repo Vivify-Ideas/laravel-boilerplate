@@ -1,16 +1,14 @@
 FROM nginx:1-alpine
 
+CMD ["/entrypoint-web.sh"]
 COPY ./docker/entrypoint-web.sh /entrypoint-web.sh
-COPY ./src/public /app/public
+COPY ./docker/default.template /etc/nginx/conf.d/default.template
 
+COPY ./src/public /app/public
 RUN set -ex && \
 	apk add --no-cache bash && \
 	mkdir -p /app/storage/app/public && \
 	ln -s /app/storage/app/public /app/public/storage && \
 	chown -R nginx:nginx /app/public && \
 	chmod +x /entrypoint-web.sh
-
-COPY ./docker/vhost.template /etc/nginx/conf.d/vhost.template
-
-CMD ["/entrypoint-web.sh"]
 

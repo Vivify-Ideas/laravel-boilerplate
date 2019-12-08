@@ -16,14 +16,6 @@ volumes:
       path: /mnt/drone-docker
 
 steps:
-  - name: tag
-    image: alpine
-    commands:
-      - apk add --no-cache git
-      - echo "export BRANCH="$(git rev-parse --abbrev-ref HEAD) > .tag
-      - echo "export COMMIT="$(git rev-parse --short HEAD) >> .tag
-      - cat .tag
-
   - name: build laravel
     image: docker:dind
     environment:
@@ -37,13 +29,12 @@ steps:
       - name: docker_daemon
         path: /var/run/docker.sock
     commands:
-      - source .tag
       - docker login -u $REGISTRY_USER -p $REGISTRY_PASS registry.vivifyideas.com
-      - docker build -t registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}:$BRANCH --pull=true .
-      - docker push registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}:$BRANCH
+      - docker build -t registry.vivifyideas.com/{NAMESPACE}/laravel:${DRONE_BRANCH} --pull=true .
+      - docker push registry.vivifyideas.com/{NAMESPACE}/laravel:${DRONE_BRANCH}
       - docker image prune -f
 
-  - name: build laravel
+  - name: build web
     image: docker:dind
     environment:
       REGISTRY_USER:
@@ -56,17 +47,17 @@ steps:
       - name: docker_daemon
         path: /var/run/docker.sock
     commands:
-      - source .tag
       - docker login -u $REGISTRY_USER -p $REGISTRY_PASS registry.vivifyideas.com
-      - docker build -f Dockerfile-web -t registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}:$BRANCH --pull=true .
-      - docker push registry.vivifyideas.com/{NAMESPACE}/{REPOSITORY}:$BRANCH
+      - docker build -f Dockerfile-web -t registry.vivifyideas.com/{NAMESPACE}/web:${DRONE_BRANCH} --pull=true .
+      - docker push registry.vivifyideas.com/{NAMESPACE}/web:${DRONE_BRANCH}
       - docker image prune -f
 
   - name: deploy
     image: alpine
+    environment:
+      BRANCH: ${DRONE_BRANCH}
     commands:
       - apk add --no-cache curl
-      - source .tag
       - sh deploy.sh
 
   - name: slack

@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get(
+    '/user/verify',
+    [
+        'as' => 'verifyEmail',
+        'uses' => 'User\VerifyEmailController@store'
+    ]
+);
