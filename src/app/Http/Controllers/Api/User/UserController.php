@@ -7,7 +7,6 @@ use App\Http\Requests\User\UserChangePasswordRequest;
 use App\Services\User\UserService;
 use App\Http\Requests\User\UpdateProfileRequest;
 use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
 use App\Http\Requests\User\SearchUserRequest;
 
 class UserController extends Controller {
@@ -150,6 +149,31 @@ class UserController extends Controller {
         return $this->_userService->search(
             $request->get('term'),
             $request->get('size', 5)
+        );
+    }
+
+    /*
+     * Send verification email to the user
+     *
+     * @SWG\Post(
+     *   tags={"User"},
+     *   path="/user/verify/resend",
+     *   summary="Resend user verification email",
+     *   operationId="userResendVerificationEmail",
+     *   produces={"application/json"},
+     *   security={{"authorization_token":{}}},
+     *   @SWG\Response(response=200, description="Successful operation"),
+     *   @SWG\Response(response=401, description="Unauthorized"),
+     *   @SWG\Response(response=422, description="Validation failed"),
+     *   @SWG\Response(response=500, description="Internal server error")
+     * )
+     *
+     * @return void
+     */
+    public function sendVerifyEmail()
+    {
+        return $this->_userService->generateAndSendVerifyEmail(
+            auth()->user()
         );
     }
 }

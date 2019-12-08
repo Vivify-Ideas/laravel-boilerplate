@@ -8,6 +8,8 @@ use Illuminate\Http\UploadedFile;
 use App\Constants\UserConstants;
 use App\Types\File\CompressImage;
 use Illuminate\Support\Collection;
+use App\Mail\User\VerifyEmailMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserService {
 
@@ -83,5 +85,45 @@ class UserService {
             ->orWhere('email', 'LIKE', "%{$term}%")
             ->limit($size)
             ->get();
+    }
+
+    /**
+     * Generate verification token, and send verification email
+     * with that token
+     *
+     * @param User $user
+     * @return void
+     */
+    public function generateAndSendVerifyEmail(User $user)
+    {
+        $user->generateVerifyToken();
+        $user->save();
+        $this->sendVerifyEmail($user);
+    }
+
+    /**
+     * Generate verify token and send verification email
+     *
+     * @param User $user
+     * @return void
+     */
+    public function sendVerifyEmail(User $user) : void
+    {
+        Mail::to($user->email)
+            ->queue(
+                new VerifyEmailMail($user->verify_token)
+            );
+    }
+
+    /**
+     * Verify user token, remove it from users table
+     *
+     * @param string $token
+     * @return void
+     */
+    public function verifyEmail(string $token) : void
+    {
+        User::where('verify_token', $token)
+            ->update([ 'verify_token' => null ]);
     }
 }
