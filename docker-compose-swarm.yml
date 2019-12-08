@@ -19,8 +19,6 @@ services:
     deploy:
      restart_policy:
        condition: on-failure
-    environment:
-      - NGINX_MAX_BODY=100M
     ports:
       - 80:80
     volumes:
