@@ -6,7 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.2.7",
-        "alymosul/laravel-exponent-push-notifications": "^1.7",
+        "alymosul/laravel-exponent-push-notifications": "2.0.0",
         "barryvdh/laravel-cors": "^0.11.3",
         "darkaonline/l5-swagger": "^6.0",
         "fideloper/proxy": "^4.0",
