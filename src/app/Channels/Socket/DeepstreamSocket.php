@@ -25,7 +25,7 @@ class DeepstreamSocket implements SocketGateway {
         $data = $event->getSocketData();
         try {
             $this->_client->emitEvent($event->getSocketChannel(), $data);
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
         }
     }
