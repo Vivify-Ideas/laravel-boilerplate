@@ -152,7 +152,7 @@ class UserController extends Controller {
         );
     }
 
-    /*
+    /**
      * Send verification email to the user
      *
      * @SWG\Post(
