@@ -91,7 +91,8 @@ class UserService {
      * @param User $user
      * @return void
      */
-    public function sendVerifyEmail(User $user) : void {
+    public function sendVerifyEmail(User $user) : void
+    {
         Mail::to($user->email)
             ->queue(
                 new VerifyEmailMail($user->verify_token)
