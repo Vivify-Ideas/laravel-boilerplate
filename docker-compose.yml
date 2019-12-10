@@ -35,7 +35,7 @@ services:
     image: vivifyideas/php-fpm-production-docker-alpine
     container_name: queue
     working_dir: /app
-    command: 'php artisan queue:work --tries=3 --timeout=60'
+    command: 'php artisan queue:listen --tries=3 --timeout=60'
     volumes:
       - ./src:/app
 
