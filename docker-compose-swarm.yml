@@ -14,6 +14,17 @@ services:
       - phpsessions:/tmp
       - ./.env:/app/.env
 
+  queue:
+    image: registry.vivifyideas.com/{namespace}/laravel:{branch}
+    command: 'php artisan queue:listen --tries=3 --timeout=60'
+    volumes:
+      - cache:/app/bootstrap/cache
+      - uploads:/app/public/uploads
+      - build:/app/public/build
+      - storage:/app/storage/app/public
+      - phpsessions:/tmp
+      - ./.env:/app/.env
+
   web:
     image: registry.vivifyideas.com/{namespace}/web:{branch}
     deploy:
