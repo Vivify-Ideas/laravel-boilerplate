@@ -22,6 +22,9 @@ In order to run script all you have to do is run `chmod +x init && chmod +x pre-
 
 ### Start docker containers and install dependencies
 
+NOTE: To enter laravel container execute
+`docker exec -it laravel /bin/sh`
+
 - Run docker containers in detached mode
   `docker-compose up -d`
 
