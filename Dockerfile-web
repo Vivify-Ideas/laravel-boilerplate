@@ -1,14 +1,14 @@
 FROM nginx:1-alpine
 
-CMD ["/entrypoint-web.sh"]
-COPY ./docker/entrypoint-web.sh /entrypoint-web.sh
+ARG LARAVEL_HOST=laravel
+
 COPY ./docker/default.template /etc/nginx/conf.d/default.template
+COPY ./docker/entrypoint-web.sh /entrypoint-web.sh
+
+RUN apk add --no-cache bash && bash /entrypoint-web.sh
 
 COPY ./src/public /app/public
 RUN set -ex && \
-	apk add --no-cache bash && \
 	mkdir -p /app/storage/app/public && \
 	ln -s /app/storage/app/public /app/public/storage && \
-	chown -R nginx:nginx /app/public && \
-	chmod +x /entrypoint-web.sh
-
+	chown -R nginx:nginx /app/public
