@@ -16,7 +16,7 @@
         "laravel/tinker": "^2.5.0",
         "laravel/ui": "^3.1",
         "pda/pheanstalk": "^4.0",
-        "pragmarx/health": "^1.0.2",
+        "pragmarx/health": "^1.0",
         "predis/predis": "^1.1",
         "sentry/sentry-laravel": "^2.2.0",
         "tymon/jwt-auth": "^1.0.1",

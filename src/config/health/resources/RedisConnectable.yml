@@ -6,6 +6,6 @@ column_size: 3
 error_message: "Could not connect to %s on port %s"
 targets:
   - default:
-      hostname: localhost
+      hostname: redis
       port: 6379
       timeout: 2

@@ -7,6 +7,6 @@ error_message: "Could not connect to %s on port %s"
 targets:
   - default:
       name: localhost
-      hostname: localhost
+      hostname: db
       port: 3306
       timeout: 2
