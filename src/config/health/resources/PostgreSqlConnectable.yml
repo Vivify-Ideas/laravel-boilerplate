@@ -1,12 +1,11 @@
-name: MySQL Connectable
-abbreviation: mysqlgrsqlsrvrconn
+name: PostgreSQL Connectable
+abbreviation: pstgrsqlsrvrconn
 checker: PragmaRX\Health\Checkers\PortCheck
 notify: true
 column_size: 3
 error_message: "Could not connect to %s on port %s"
 targets:
   - default:
-      name: localhost
-      hostname: db
-      port: 3306
+      hostname: localhost
+      port: 5432
       timeout: 2

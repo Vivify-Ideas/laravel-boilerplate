@@ -1,4 +1,4 @@
-FROM vivifyideas/php-fpm-production-docker-alpine
+FROM vivifyideas/php-fpm-production-docker-alpine:7.4
 
 RUN set -ex && \
 	cd /home/ && \

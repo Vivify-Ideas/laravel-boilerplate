@@ -32,7 +32,7 @@ services:
     image: "jonbaldie/beanstalkd"
 
   queue:
-    image: vivifyideas/php-fpm-production-docker-alpine
+    image: vivifyideas/php-fpm-production-docker-alpine:7.4
     container_name: queue
     working_dir: /app
     command: 'php artisan queue:listen --tries=3 --timeout=60'

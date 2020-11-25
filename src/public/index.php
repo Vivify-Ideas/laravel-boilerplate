@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable PSR1.Files.SideEffects
 
 /**
  * Laravel - A PHP Framework For Web Artisans
@@ -8,6 +9,10 @@
  */
 
 define('LARAVEL_START', microtime(true));
+
+if (file_exists(__DIR__.'/../storage/framework/maintenance.php')) {
+    require __DIR__.'/../storage/framework/maintenance.php';
+}
 
 /*
 |--------------------------------------------------------------------------
