@@ -1,4 +1,4 @@
-# Laravel Boilerplate - Laravel 5.7 API
+# Laravel Boilerplate - Laravel 8.x API
 
 ## Requirements
 
@@ -97,7 +97,7 @@ SENTRY_LARAVEL_DSN=https://<key>@sentry.io/<project>
 
 # Telescope
 
-[Laravel Telescope](https://laravel.com/docs/5.7/telescope) is included in this boilerplate.
+[Laravel Telescope](https://laravel.com/docs/8.x/telescope) is included in this boilerplate.
 
 - By default telescope is only available if `APP_ENV` is `local`.
 - Telescope is accessible at `/telescope` route.

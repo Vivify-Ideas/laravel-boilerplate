@@ -1,11 +1,11 @@
-name: Redis Connectable
+name: Elasticsearch Connectable
 abbreviation: redisconn
 checker: PragmaRX\Health\Checkers\PortCheck
 notify: true
 column_size: 3
 error_message: "Could not connect to %s on port %s"
 targets:
-  - default:
+  - localhost:
       hostname: localhost
-      port: 6379
+      port: 9200
       timeout: 2
