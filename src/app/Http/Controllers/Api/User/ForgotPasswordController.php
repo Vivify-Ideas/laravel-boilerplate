@@ -25,23 +25,24 @@ class ForgotPasswordController extends Controller {
 
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"User"},
      *   path="/user/forgot-password",
      *   summary="Send a forgot password email with link",
      *   operationId="userForgotPassword",
-     *   produces={"application/json"},
-     *   @SWG\Parameter(
-     *     name="email",
-     *     in="formData",
+     *   @OA\RequestBody(
      *     required=true,
-     *     type="string"
+     *     description="Pass user credentials",
+     *     @OA\JsonContent(
+     *       required={"email"},
+     *       @OA\Property(property="email", type="string", format="email", example="user1@mail.com")
+     *     ),
      *   ),
      *   security={{"authorization_token":{}}},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error")
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=422, description="Validation failed", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent())
      * )
      *
      * Send forgot password link in email
@@ -61,35 +62,26 @@ class ForgotPasswordController extends Controller {
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"User"},
      *   path="/user/reset-password",
      *   summary="Reset password ",
      *   operationId="userResetPassword",
-     *   produces={"application/json"},
-     *   @SWG\Parameter(
-     *     name="token",
-     *     in="formData",
+     *   @OA\RequestBody(
      *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="password",
-     *     in="formData",
-     *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="password_confirmation",
-     *     in="formData",
-     *     required=true,
-     *     type="string"
+     *     description="Pass user credentials",
+     *     @OA\JsonContent(
+     *       required={"token", "password", "password_confirmation"},
+     *       @OA\Property(property="token", type="string"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *       @OA\Property(property="password_confirmation", type="string", format="password", example="PassWord12345")
+     *     ),
      *   ),
      *   security={{"authorization_token":{}}},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error")
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=422, description="Validation failed", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent())
      * )
      *
      * Change user password

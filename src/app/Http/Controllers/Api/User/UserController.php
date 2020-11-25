@@ -24,35 +24,26 @@ class UserController extends Controller {
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"User"},
      *   path="/user/change-password",
      *   summary="Change user password",
      *   operationId="usersChangePassword",
-     *   produces={"application/json"},
-     *   @SWG\Parameter(
-     *     name="current_password",
-     *     in="formData",
+     *   @OA\RequestBody(
      *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="new_password",
-     *     in="formData",
-     *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="new_password_confirmation",
-     *     in="formData",
-     *     required=true,
-     *     type="string"
+     *     description="Pass user credentials",
+     *     @OA\JsonContent(
+     *       required={"current_password", "new_password", "new_password_confirmation"},
+     *       @OA\Property(property="current_password", type="string", format="password", example="PassWord12345"),
+     *       @OA\Property(property="new_password", type="string", format="password", example="PassWord12345"),
+     *       @OA\Property(property="new_password_confirmation", type="string", format="password", example="Pass12345")
+     *     ),
      *   ),
      *   security={{"authorization_token":{}}},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error")
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=422, description="Validation failed", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent())
      * )
      * Change active user password to the new one
      *
@@ -70,35 +61,26 @@ class UserController extends Controller {
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"User"},
      *   path="/user",
      *   summary="Change user first name, last name and avatar",
      *   operationId="userUpdateProfile",
-     *   produces={"application/json"},
-     *   @SWG\Parameter(
-     *     name="first_name",
-     *     in="formData",
-     *     required=false,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="last_name",
-     *     in="formData",
-     *     required=false,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="avatar",
-     *     in="formData",
-     *     required=false,
-     *     type="file"
+     *   @OA\RequestBody(
+     *     required=true,
+     *     description="Pass user credentials",
+     *     @OA\JsonContent(
+     *       required={},
+     *       @OA\Property(property="first_name", type="string", example="ex. John"),
+     *       @OA\Property(property="last_name", type="string", example="ex. Doe"),
+     *       @OA\Property(property="avatar", type="file")
+     *     ),
      *   ),
      *   security={{"authorization_token":{}}},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error")
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=422, description="Validation failed", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent())
      * )
      *
      * Update user profile information and avatar
@@ -116,17 +98,16 @@ class UserController extends Controller {
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"User"},
      *   path="/user/verify/resend",
      *   summary="Resend user verification email",
      *   operationId="userResendVerificationEmail",
-     *   produces={"application/json"},
      *   security={{"authorization_token":{}}},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error")
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=422, description="Validation failed", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent())
      * )
      *
      * Send verification email to the user

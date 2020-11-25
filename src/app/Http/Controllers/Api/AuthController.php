@@ -24,37 +24,25 @@ class AuthController extends Controller {
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"Auth"},
      *   path="/auth/login",
      *   summary="Login user",
      *   operationId="login",
-     *   produces={"application/json"},
-     *   @SWG\Parameter(
-     *     name="email",
-     *     in="formData",
-     *     description="ex. user@test.com",
+     *   @OA\RequestBody(
      *     required=true,
-     *     type="string"
+     *     description="Pass user credentials",
+     *     @OA\JsonContent(
+     *       required={"email","password"},
+     *       @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *       @OA\Property(property="g-recaptcha-response", type="string", example="something"),
+     *     ),
      *   ),
-     *   @SWG\Parameter(
-     *     name="password",
-     *     in="formData",
-     *     description="[someUniqueValue]",
-     *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="g-recaptcha-response",
-     *     in="formData",
-     *     description="Google ReCaptcha Response",
-     *     required=false,
-     *     type="string"
-     *   ),
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error")
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=422, description="Validation failed", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent())
      * )
      *
      * @param UserLoginRequest $request
@@ -68,50 +56,26 @@ class AuthController extends Controller {
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"Auth"},
      *   path="/auth/register",
      *   summary="Register new user",
      *   operationId="register",
-     *   produces={"application/json"},
-     *   @SWG\Parameter(
-     *     name="first_name",
-     *     in="formData",
-     *     description="ex. John Doe",
+     *   @OA\RequestBody(
      *     required=true,
-     *     type="string"
+     *     description="Pass user credentials",
+     *     @OA\JsonContent(
+     *       required={"first_name", "last_name", "email","password"},
+     *       @OA\Property(property="first_name", type="string", example="ex. John"),
+     *       @OA\Property(property="last_name", type="string", example="ex. Doe"),
+     *       @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *       @OA\Property(property="g-recaptcha-response", type="string", example="something"),
+     *     ),
      *   ),
-     *   @SWG\Parameter(
-     *     name="last_name",
-     *     in="formData",
-     *     description="ex. John Doe",
-     *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="email",
-     *     in="formData",
-     *     description="ex. user@test.com",
-     *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="password",
-     *     in="formData",
-     *     description="[someUniqueValue]",
-     *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Parameter(
-     *     name="g-recaptcha-response",
-     *     in="formData",
-     *     description="Google ReCaptcha Response",
-     *     required=false,
-     *     type="string"
-     *   ),
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error")
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=422, description="Validation failed", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent())
      * )
      * @param UserCreateRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -124,16 +88,15 @@ class AuthController extends Controller {
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
      *   tags={"Auth"},
      *   path="/auth/me",
      *   summary="Get logged user",
      *   operationId="me",
-     *   produces={"application/json"},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=422, description="Validation failed"),
-     *   @SWG\Response(response=500, description="Internal server error"),
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=422, description="Validation failed", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent()),
      *   security={{"authorization_token":{}}}
      * )
      * @param Request $request
@@ -145,15 +108,14 @@ class AuthController extends Controller {
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"Auth"},
      *   path="/auth/logout",
      *   summary="Invalidate JWT token",
      *   operationId="logout",
-     *   produces={"application/json"},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=500, description="Internal server error"),
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent()),
      *   security={{"authorization_token":{}}}
      * )
      *
@@ -168,15 +130,14 @@ class AuthController extends Controller {
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *   tags={"Auth"},
      *   path="/auth/refresh",
      *   summary="Refresh JWT token",
      *   operationId="refresh",
-     *   produces={"application/json"},
-     *   @SWG\Response(response=200, description="Successful operation"),
-     *   @SWG\Response(response=401, description="Unauthorized"),
-     *   @SWG\Response(response=500, description="Internal server error"),
+     *   @OA\Response(response=200, description="Successful operation", @OA\JsonContent()),
+     *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *   @OA\Response(response=500, description="Internal server error", @OA\JsonContent()),
      *   security={{"authorization_token":{}}}
      * )
      *
